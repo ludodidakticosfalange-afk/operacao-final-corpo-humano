@@ -1,0 +1,879 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Operação Final — Corpo Humano | Falange Educación Lúdica</title>
+
+  <!-- Fonte estilo game/pixel (funciona no GitHub Pages) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#050814;
+      --bg2:#070b18;
+      --panel: rgba(255,255,255,.06);
+      --stroke: rgba(255,255,255,.14);
+      --txt:#e8eefc;
+      --muted:#a8b3cf;
+      --accent:#60a5fa;
+      --ok:#22c55e;
+      --warn:#f59e0b;
+      --bad:#ef4444;
+      --radius:18px;
+      --shadow: 0 18px 55px rgba(0,0,0,.45);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--txt);
+      background:
+        radial-gradient(1200px 700px at 15% 10%, #1b2a6b 0%, var(--bg) 55%),
+        radial-gradient(900px 600px at 85% 85%, #0b5bd3 0%, rgba(0,0,0,0) 55%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      min-height:100vh;
+    }
+    a{color:inherit}
+    .wrap{max-width:1100px;margin:0 auto;padding:22px 16px 64px}
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; margin-bottom:14px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      padding:10px 12px; border:1px solid var(--stroke);
+      border-radius:999px; background:rgba(0,0,0,.18);
+      backdrop-filter: blur(6px);
+    }
+    .brand .dot{
+      width:10px;height:10px;border-radius:50%;
+      background:var(--accent);
+      box-shadow:0 0 20px rgba(96,165,250,.75);
+    }
+    .brand strong{font-weight:800;letter-spacing:.2px}
+    .pill{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:8px 10px;
+      border:1px solid var(--stroke);
+      border-radius:999px;
+      background:rgba(0,0,0,.18);
+      color:var(--muted);
+      font-size:13px;
+      white-space:nowrap;
+    }
+
+    /* HERO */
+    .hero{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:18px;
+      align-items:stretch;
+      margin-top:12px;
+    }
+    @media (max-width: 920px){
+      .hero{grid-template-columns:1fr}
+    }
+    .card{
+      border:1px solid var(--stroke);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .heroLeft{padding:18px}
+    .kicker{
+      display:inline-flex; align-items:center; gap:10px;
+      font-family: "Press Start 2P", system-ui;
+      font-size:12px;
+      color:rgba(255,255,255,.9);
+      opacity:.9;
+    }
+    .kicker span{
+      display:inline-block;
+      width:10px; height:10px;
+      background:var(--ok);
+      box-shadow:0 0 18px rgba(34,197,94,.7);
+    }
+    h1{
+      margin:14px 0 10px;
+      font-family:"Press Start 2P", system-ui;
+      font-size:24px;
+      line-height:1.25;
+      letter-spacing: .6px;
+    }
+    .sub{
+      color:var(--muted);
+      margin:0 0 14px;
+      font-size:15px;
+      line-height:1.55;
+    }
+    .badges{
+      display:flex; flex-wrap:wrap; gap:10px;
+      margin:14px 0 18px;
+    }
+    .badge{
+      padding:10px 12px;
+      border:1px solid var(--stroke);
+      border-radius:999px;
+      background:rgba(0,0,0,.18);
+      font-size:13px;
+      color:rgba(255,255,255,.92);
+    }
+    .badge b{color:var(--accent)}
+    .ctaRow{
+      display:flex; flex-wrap:wrap; gap:10px;
+      margin-top:12px;
+      align-items:center;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:12px 14px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.18);
+      background: linear-gradient(180deg, rgba(96,165,250,.25), rgba(96,165,250,.12));
+      color: var(--txt);
+      text-decoration:none;
+      font-weight:800;
+      box-shadow: 0 14px 40px rgba(0,0,0,.35);
+    }
+    .btn:hover{filter:brightness(1.08)}
+    .btn.secondary{
+      background: rgba(0,0,0,.22);
+      color: rgba(255,255,255,.92);
+    }
+
+    /* HERO RIGHT */
+    .heroRight{
+      display:flex;
+      flex-direction:column;
+    }
+    .boxArt{
+      position:relative;
+      aspect-ratio: 4/3;
+      background:
+        radial-gradient(700px 320px at 50% 30%, rgba(96,165,250,.25), rgba(0,0,0,0)),
+        rgba(0,0,0,.22);
+      border-bottom:1px solid var(--stroke);
+      overflow:hidden;
+    }
+    .boxArt img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      filter:saturate(1.05) contrast(1.05);
+    }
+    .boxArt .overlay{
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.55));
+      pointer-events:none;
+    }
+    .specs{
+      padding:14px 14px 16px;
+      display:grid;
+      gap:10px;
+    }
+    .spec{
+      display:flex; gap:10px; align-items:flex-start;
+      padding:10px 10px;
+      border:1px solid var(--stroke);
+      border-radius:14px;
+      background: rgba(0,0,0,.18);
+    }
+    .spec .icon{
+      width:28px;height:28px;border-radius:10px;
+      display:grid; place-items:center;
+      background: rgba(96,165,250,.18);
+      border:1px solid rgba(96,165,250,.25);
+      flex:0 0 auto;
+    }
+    .spec b{display:block}
+    .spec small{color:var(--muted);line-height:1.45}
+
+    /* SECTIONS */
+    .section{
+      margin-top:18px;
+      padding:18px;
+    }
+    .section h2{
+      margin:0 0 10px;
+      font-family:"Press Start 2P", system-ui;
+      font-size:16px;
+      letter-spacing:.6px;
+    }
+    .grid2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+    @media (max-width: 920px){ .grid2{grid-template-columns:1fr} }
+
+    .list{
+      margin:0; padding:0; list-style:none;
+      display:grid; gap:10px;
+    }
+    .li{
+      padding:12px 12px;
+      border:1px solid var(--stroke);
+      border-radius:14px;
+      background: rgba(0,0,0,.18);
+      line-height:1.5;
+    }
+    .li .tag{
+      display:inline-block;
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      margin-bottom:8px;
+      color:rgba(255,255,255,.92);
+      background:rgba(255,255,255,.06);
+    }
+    .li p{margin:6px 0 0; color:var(--muted)}
+    .bncc{
+      font-size:14px;
+      color:var(--muted);
+      line-height:1.6;
+    }
+    .bncc b{color:#fff}
+    .bncc code{
+      background: rgba(0,0,0,.28);
+      border:1px solid rgba(255,255,255,.14);
+      padding:2px 6px;
+      border-radius:8px;
+      color:rgba(255,255,255,.92);
+    }
+
+    /* FOOTER */
+    .footer{
+      margin-top:18px;
+      padding:18px;
+      text-align:center;
+      color:var(--muted);
+      border:1px solid var(--stroke);
+      border-radius:var(--radius);
+      background: rgba(0,0,0,.18);
+    }
+    .mini{
+      font-size:12px;
+      opacity:.92;
+      line-height:1.55;
+    }
+
+html{
+  scroll-behavior: smooth;
+}
+.btn.active{
+  outline:2px solid var(--accent);
+  box-shadow: 0 0 0 3px rgba(96,165,250,.25), 0 14px 40px rgba(0,0,0,.35);
+}
+/* ===============================
+   BOTÕES CHAMATIVOS (ATENÇÃO)
+   =============================== */
+
+/* animação de piscar */
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 0 rgba(96,165,250,0.0);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 22px rgba(96,165,250,0.85);
+    transform: scale(1.05);
+  }
+  100% {
+    box-shadow: 0 0 0 rgba(96,165,250,0.0);
+    transform: scale(1);
+  }
+}
+
+/* BOTÃO PRINCIPAL – 40 MIN */
+.btn {
+  background: linear-gradient(180deg, #22c55e, #16a34a);
+  color: #ffffff;
+  font-weight: 900;
+  animation: pulseGlow 1.8s infinite;
+}
+
+/* BOTÃO SECUNDÁRIO – KIT */
+.btn.secondary {
+  background: linear-gradient(180deg, #f59e0b, #d97706);
+  color: #1f1300;
+  animation: pulseGlow 2.2s infinite;
+}
+
+/* quando o botão estiver ATIVO (clicado) */
+.btn.active,
+.btn.secondary.active {
+  animation: none;
+  box-shadow: 0 0 28px rgba(255,255,255,0.9);
+  transform: scale(1.08);
+}
+
+/* BOTÃO DE COMPRA — VERMELHO */
+.btn.comprar{
+  background: linear-gradient(180deg, #ef4444, #b91c1c);
+  border: 1px solid rgba(255,255,255,.25);
+  color: #ffffff;
+  font-weight: 900;
+  letter-spacing: .5px;
+  box-shadow:
+    0 0 0 2px rgba(239,68,68,.35),
+    0 14px 40px rgba(0,0,0,.45);
+}
+
+.btn.comprar:hover{
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+}
+
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="brand">
+        <div class="dot"></div>
+        <strong>FALANGE Educación Lúdica</strong>
+      </div>
+      <div class="pill">✅ Digital + Imprimível • 6º Ano • AEE</div>
+    </div>
+
+    <!-- =========================
+         PÁGINA 1 (VENDA)
+    ========================== -->
+<section id="pagina-capa">   
+ <div class="hero">
+
+      <div class="card heroLeft">
+        <div class="kicker"><span></span> JOGO EDUCACIONAL • CIÊNCIAS</div>
+
+        <h1>OPERAÇÃO FINAL<br>CORPO HUMANO</h1>
+
+        <p class="sub">
+          Um <b>kit completo</b> para aulas práticas e envolventes sobre <b>sistemas do corpo humano</b>,
+          com versões <b>digitais</b> (projetor/celular) e <b>imprimíveis</b> — pensado para o
+          <b>6º ano</b> e com apoio para <b>AEE</b>.
+        </p>
+
+        <div class="badges">
+          <div class="badge">🎯 <b>Professor escolhe</b>: Quiz ou Cartas</div>
+          <div class="badge">⏱️ Controle de tempo</div>
+          <div class="badge">🏅 Certificado automático</div>
+          <div class="badge">🔊 Áudio e acessibilidade</div>
+        </div>
+
+       <div class="ctaRow">
+  <button onclick="abrirKit()" class="btn secondary">
+    Ver o que vem no kit
+  </button>
+
+  <button onclick="abrir40min()" class="btn">
+    Ver como aplicar em 40 minutos
+  </button>
+
+  <button onclick="abrirCompra()" class="btn comprar">
+    💳 COMPRAR AGORA
+  </button>
+  
+  <a href="acesso.html" class="btn">
+  🔐 ACESSAR MATERIAL
+</a>
+
+</div>
+
+
+
+
+        <div class="section card" style="margin-top:16px;">
+          <h2 id="bncc">POR QUE ESSE PRODUTO É IMPORTANTE</h2>
+          <p class="bncc">
+            Este material fortalece uma aula ativa, em que o aluno aprende por <b>ação</b> e <b>decisão</b>
+            (em vez de só copiar). Ele apoia a compreensão de que o corpo humano é um conjunto de
+            <b>sistemas integrados</b> e promove <b>autocuidado</b>, linguagem científica e participação.
+            <br><br>
+            <b>Alinhamento BNCC (Ciências – 6º ano):</b><br>
+            • <code>EF06CI06</code> — organismos como arranjo de sistemas (modelos físicos/digitais)<br>
+            • <code>EF06CI07</code> — sistema nervoso e coordenação das ações motoras e sensoriais<br>
+            • <code>EF06CI09</code> — interação entre sistemas muscular/ósseo/nervoso<br>
+            <br>
+            <b>AEE:</b> atividades multimodais (visual, manipulação, áudio), linguagem objetiva, repetição com variação,
+            e opção de uso individual ou em grupo.
+          </p>
+        </div>
+      </div>
+
+      <div class="card heroRight">
+        <!-- TROQUE a imagem abaixo pelo seu arquivo real -->
+        <div class="boxArt">
+          <!-- coloque na pasta do repo: capa-caixa.png -->
+          <img src="capa-caixa.png" alt="Capa e caixa do jogo Operação Final Corpo Humano">
+          <div class="overlay"></div>
+        </div>
+
+        <div class="specs">
+          <div class="spec">
+            <div class="icon">🎥</div>
+            <div>
+              <b>Funciona no projetor</b>
+              <small>Ideal para sala cheia: visual grande e dinâmico.</small>
+            </div>
+          </div>
+          <div class="spec">
+            <div class="icon">🖨️</div>
+            <div>
+              <b>Também é imprimível</b>
+              <small>Para professores que preferem atividade física/papel.</small>
+            </div>
+          </div>
+          <div class="spec">
+            <div class="icon">♿</div>
+            <div>
+              <b>Apoio para AEE</b>
+              <small>Recursos de acessibilidade e materiais ilustrados.</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+</section>
+<section id="secao-kit" style="display:none;">
+
+    <!-- =========================
+         PÁGINA 2 (CONTEÚDO DO KIT)
+    ========================== -->
+    <div id="conteudo" class="card section" style="margin-top:18px;">
+
+      <h2>O QUE VEM NO KIT</h2>
+
+      <div class="grid2">
+<ul class="list">
+          <li class="li">
+            <span class="tag">1) Jogo principal virtual</span>
+            <b>Operação Final — modo completo</b>
+            <p>Versão principal do jogo para rodar no computador e usar no projetor, com dinâmica de “operação”, pontuação e desafio.</p>
+          </li>
+<!-- VÍDEOS DE DEMONSTRAÇÃO (cole abaixo do H2) -->
+<div class="grid2" style="margin-top:12px;margin-bottom:14px;">
+  <div class="card" style="padding:12px;">
+    <div style="font-weight:800;margin-bottom:8px;">🎬 Demonstração — Computador</div>
+    <video controls playsinline preload="metadata" style="width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.14);">
+      <source src="comp_operacao.mp4" type="video/mp4">
+      Seu navegador não suporta vídeo.
+    </video>
+    <div style="color:var(--muted);font-size:12px;margin-top:8px;line-height:1.4;">
+      Dica: coloque o arquivo <b>telainicial.mp4</b> na mesma pasta do <b>index.html</b>.
+    </div>
+  </div>
+
+  <div class="card" style="padding:12px;">
+    <div style="font-weight:800;margin-bottom:8px;">🎬 Demonstração — Gameplay</div>
+    <video controls playsinline preload="metadata" style="width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.14);">
+      <source src="gameplay.mp4" type="video/mp4">
+      Seu navegador não suporta vídeo.
+    </video>
+    <div style="color:var(--muted);font-size:12px;margin-top:8px;line-height:1.4;">
+      Depois você só troca o nome do arquivo (ex: <b>gameplay.mp4</b>).
+    </div>
+  </div>
+</div>
+<!-- /VÍDEOS -->
+
+          <li class="li">
+            <span class="tag">2) Tabuleiro + cartas virtual</span>
+            <b>Alternativa sem impressão</b>
+            <p>Se o professor não quiser o impresso, ele usa o tabuleiro e as cartas digitais para conduzir a aula do mesmo jeito.</p>
+          </li>
+<!-- VÍDEOS DE DEMONSTRAÇÃO (cole abaixo do H2) -->
+<div class="grid2" style="margin-top:12px;margin-bottom:14px;">
+  <div class="card" style="padding:12px;">
+    <div style="font-weight:800;margin-bottom:8px;">🎬 Demonstração — Computador</div>
+    <video controls playsinline preload="metadata" style="width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.14);">
+      <source src="carta_tabuleiro_virtual.mp4" type="video/mp4">
+      Seu navegador não suporta vídeo.
+    </video>
+    <div style="color:var(--muted);font-size:12px;margin-top:8px;line-height:1.4;">
+      Dica: coloque o arquivo <b>telainicial.mp4</b> na mesma pasta do <b>index.html</b>.
+    </div>
+  </div>
+
+  <div class="card" style="padding:12px;">
+    <div style="font-weight:800;margin-bottom:8px;">🎬 Demonstração — Gameplay</div>
+    <video controls playsinline preload="metadata" style="width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.14);">
+      <source src="gameplay.mp4" type="video/mp4">
+      Seu navegador não suporta vídeo.
+    </video>
+    <div style="color:var(--muted);font-size:12px;margin-top:8px;line-height:1.4;">
+      Depois você só troca o nome do arquivo (ex: <b>gameplay.mp4</b>).
+    </div>
+  </div>
+</div>
+<!-- /VÍDEOS -->
+          <li class="li">
+            <span class="tag">3) Jogo impresso</span>
+            <b>Versão física para sala</b>
+            <p>Atividade pronta para imprimir e aplicar, com foco em aprendizagem ativa e participação da turma.</p>
+          </li>
+        </ul>
+
+        <ul class="list">
+          <li class="li">
+            <span class="tag">4) Memória virtual + impresso (AEE)</span>
+            <b>Com áudio e bem ilustrado</b>
+            <p>Versão adaptada, pensada para acessibilidade, reforço de vocabulário e identificação dos órgãos/sistemas.</p>
+          </li>
+<!-- VÍDEOS DE DEMONSTRAÇÃO (cole abaixo do H2) -->
+<div class="grid2" style="margin-top:12px;margin-bottom:14px;">
+  <div class="card" style="padding:12px;">
+    <div style="font-weight:800;margin-bottom:8px;">🎬 Demonstração — Computador</div>
+    <video controls playsinline preload="metadata" style="width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.14);">
+      <source src="computador_memoria_aee.mp4" type="video/mp4">
+      Seu navegador não suporta vídeo.
+    </video>
+    <div style="color:var(--muted);font-size:12px;margin-top:8px;line-height:1.4;">
+      Dica: coloque o arquivo <b>telainicial.mp4</b> na mesma pasta do <b>index.html</b>.
+    </div>
+  </div>
+
+  <div class="card" style="padding:12px;">
+    <div style="font-weight:800;margin-bottom:8px;">🎬 Demonstração — Celular</div>
+    <video controls playsinline preload="metadata" style="width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.14);">
+      <source src="cel_memoria_aee.mp4" type="video/mp4">
+      Seu navegador não suporta vídeo.
+    </video>
+    <div style="color:var(--muted);font-size:12px;margin-top:8px;line-height:1.4;">
+      Depois você só troca o nome do arquivo (ex: <b>gameplay.mp4</b>).
+    </div>
+  </div>
+</div>
+<!-- /VÍDEOS -->
+          <li class="li">
+            <span class="tag">5) Memória virtual (Ens. Fundamental)</span>
+            <b>Versão geral</b>
+            <p>Para revisão, aquecimento e fixação do conteúdo em formato leve e rápido.</p>
+          </li>
+<!-- VÍDEOS DE DEMONSTRAÇÃO (cole abaixo do H2) -->
+<div class="grid2" style="margin-top:12px;margin-bottom:14px;">
+  <div class="card" style="padding:12px;">
+    <div style="font-weight:800;margin-bottom:8px;">🎬 Demonstração — Computador</div>
+    <video controls playsinline preload="metadata" style="width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.14);">
+      <source src="memoria_fundamental.mp4" type="video/mp4">
+      Seu navegador não suporta vídeo.
+    </video>
+    <div style="color:var(--muted);font-size:12px;margin-top:8px;line-height:1.4;">
+      Dica: coloque o arquivo <b>telainicial.mp4</b> na mesma pasta do <b>index.html</b>.
+    </div>
+  </div>
+
+  <div class="card" style="padding:12px;">
+    <div style="font-weight:800;margin-bottom:8px;">🎬 Demonstração — Celular</div>
+    <video controls playsinline preload="metadata" style="width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.14);">
+      <source src="cel_memoria_fundamental.mp4" type="video/mp4">
+      Seu navegador não suporta vídeo.
+    </video>
+    <div style="color:var(--muted);font-size:12px;margin-top:8px;line-height:1.4;">
+      Depois você só troca o nome do arquivo (ex: <b>gameplay.mp4</b>).
+    </div>
+  </div>
+</div>
+<!-- /VÍDEOS -->
+          <li class="li">
+            <span class="tag">6) Impressos extras</span>
+            <b>Quebra-cabeça + sopa de letras</b>
+            <p>Quebra-cabeça impresso com partes do corpo e sopa de letras para reforço e avaliação formativa.</p>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+
+<button onclick="voltarCapa()" class="btn secondary">
+  ⬅ Voltar para a capa
+</button>
+
+</section>
+
+
+
+<section id="secao-40min" 
+style="
+display:none;
+  max-width:1200px;
+  margin:80px auto;
+  padding:48px 32px;
+  background:linear-gradient(180deg,#081a2c,#0b2540);
+  color:#ffffff;
+  border-radius:22px;
+  font-family:'Segoe UI',Arial,Helvetica,sans-serif;
+  box-shadow:0 0 0 2px rgba(255,255,255,0.05);
+">
+
+  <h2 style="
+    font-size:36px;
+    margin-bottom:18px;
+    letter-spacing:0.5px;
+  ">
+    ⏱️ Como aplicar em 40 minutos
+    </h2>
+
+  <p style="
+    font-size:18px;
+    line-height:1.7;
+    max-width:950px;
+    color:#d6e4ff;
+  ">
+    O <strong>Operação Final – Corpo Humano</strong> não é apenas um jogo.
+
+    Ele foi desenvolvido como uma <strong>aula pronta de Ciências</strong>,
+    pensada para a realidade do professor do Ensino Fundamental e do AEE.
+    Em <strong>40 minutos</strong>, o conteúdo é apresentado, trabalhado,
+    fixado e avaliado de forma lúdica, organizada e alinhada à BNCC.
+  </p>
+
+  <div style="
+    margin-top:40px;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:32px;
+  ">
+
+    <!-- ETAPA 1 -->
+    <div style="
+      padding:24px;
+      background:#0f2f52;
+      border-radius:16px;
+      border-left:6px solid #4da3ff;
+    ">
+      <h3 style="font-size:22px;margin-bottom:10px;">1️⃣ Abertura — 5 minutos</h3>
+      <p style="font-size:16px;line-height:1.6;color:#e7f0ff;">
+        O professor apresenta o tema da aula (<strong>Corpo Humano</strong>) e ativa
+        o conhecimento prévio dos alunos com uma pergunta simples e visual, como:
+        <em>“Quais órgãos do corpo humano são essenciais para a vida?”</em>.
+        O jogo é projetado ou apresentado por meio das cartas, despertando o interesse imediato da turma.
+      </p>
+    </div>
+
+    <!-- ETAPA 2 -->
+    <div style="
+      padding:24px;
+      background:#0f2f52;
+      border-radius:16px;
+      border-left:6px solid #22c55e;
+    ">
+      <h3 style="font-size:22px;margin-bottom:10px;">2️⃣ Jogo principal — 20 minutos</h3>
+      <p style="font-size:16px;line-height:1.6;color:#e7f0ff;">
+        O professor escolhe o modo de jogo conforme o objetivo da aula:
+      </p>
+      <ul style="font-size:16px;line-height:1.8;color:#e7f0ff;margin-left:20px;">
+        <li>🎮 <strong>Modo Quiz</strong> — perguntas, desafios e tempo controlado</li>
+        <li>🃏 <strong>Modo Cartas</strong> — ao acertar, o aluno identifica e posiciona corretamente o órgão</li>
+      </ul>
+      <p style="font-size:16px;line-height:1.6;color:#e7f0ff;">
+        O jogo possui controle de tempo, pontuação e disputa saudável, podendo ser aplicado
+        individualmente ou em grupos, no projetor, computador ou celular.
+      </p>
+    </div>
+
+    <!-- ETAPA 3 -->
+    <div style="
+      padding:24px;
+      background:#0f2f52;
+      border-radius:16px;
+      border-left:6px solid #facc15;
+    ">
+      <h3 style="font-size:22px;margin-bottom:10px;">3️⃣ Fixação do conteúdo — 10 minutos</h3>
+      <p style="font-size:16px;line-height:1.6;color:#e7f0ff;">
+        Após o jogo principal, o professor reforça a aprendizagem com as atividades do kit:
+      </p>
+      <ul style="font-size:16px;line-height:1.8;color:#e7f0ff;margin-left:20px;">
+        <li>🧠 Jogo da memória (digital ou impresso, com áudio)</li>
+        <li>🧩 Quebra-cabeça do corpo humano</li>
+        <li>🔤 Sopa de letras temática</li>
+      </ul>
+      <p style="font-size:16px;line-height:1.6;color:#e7f0ff;">
+        Essas atividades fortalecem a memorização, a associação visual e a compreensão dos conceitos,
+        sendo também adequadas para alunos do <strong>AEE</strong>.
+      </p>
+    </div>
+
+    <!-- ETAPA 4 -->
+    <div style="
+      padding:24px;
+      background:#0f2f52;
+      border-radius:16px;
+      border-left:6px solid #ef4444;
+    ">
+      <h3 style="font-size:22px;margin-bottom:10px;">4️⃣ Fechamento e avaliação — 5 minutos</h3>
+      <p style="font-size:16px;line-height:1.6;color:#e7f0ff;">
+        O professor retoma os principais conceitos, esclarece dúvidas e consolida a aprendizagem.
+        Na versão digital, o sistema pode gerar <strong>certificado automático de conclusão</strong>,
+        com data e horário, garantindo o registro da atividade realizada.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- RESULTADO -->
+  <div style="
+    margin-top:42px;
+    padding:28px;
+    background:#081a2c;
+    border-radius:18px;
+    border:2px dashed rgba(255,255,255,0.15);
+  ">
+    <h3 style="font-size:24px;margin-bottom:12px;">🎯 Resultado da aula</h3>
+    <p style="font-size:16px;line-height:1.7;color:#d6e4ff;">
+      Em apenas uma aula, o professor trabalha Ciências de forma ativa,
+      mantém a turma engajada, avalia a aprendizagem e cumpre os objetivos da BNCC
+      utilizando um recurso moderno, acessível e organizado.
+    </p>
+  </div>
+<button onclick="voltarCapa()" class="btn secondary">
+  ⬅ Voltar para a capa
+</button>
+
+</section>
+
+<section id="secao-compra" style="display:none;">
+
+  <div class="card section" style="
+    max-width:520px;
+    margin:0 auto;
+    background:linear-gradient(180deg,#3b0000,#5a0000);
+    border:2px solid rgba(255,255,255,.18);
+    border-radius:22px;
+    text-align:center;
+  ">
+
+    <h2 style="font-size:28px;margin-bottom:14px;">
+      Operação Final — Corpo Humano
+    </h2>
+
+    <p style="font-size:15px;line-height:1.6;opacity:.95;">
+      ✔ Jogo principal digital<br>
+      ✔ Material imprimível completo<br>
+      ✔ Jogos extras (memória, quebra-cabeça, sopa)<br>
+      ✔ Alinhado à BNCC • 6º ano • AEE
+    </p>
+
+    <div style="
+      margin:22px 0;
+      font-size:36px;
+      font-weight:900;
+      color:#22c55e;
+    ">
+      R$ 97,00
+    </div>
+
+    <a
+      href="https://wa.me/5596999741475?text=Olá!%20Tenho%20interesse%20no%20produto:%0A%0A📦%20Produto:%20Operação%20Final%20—%20Corpo%20Humano%0A💰%20Valor:%20R$%2097,00"
+      class="btn comprar"
+    >
+      💳 COMPRAR AGORA
+    </a>
+
+    <!-- BOTÃO VOLTAR (AQUI É O LUGAR CERTO) -->
+    <button onclick="voltarCapa()" class="btn secondary" style="margin-top:14px;">
+      ⬅ Voltar para a capa
+    </button>
+
+    <p style="margin-top:14px;font-size:13px;opacity:.85;">
+      Atendimento direto com o criador • suporte garantido
+    </p>
+
+  </div>
+
+</section>
+
+
+        
+
+    <div class="footer">
+      <div class="mini">
+        © Falange Educación Lúdica • Operação Final — Corpo Humano<br>
+        <b>Dica:</b> no GitHub Pages, coloque este arquivo como <code>index.html</code> e suba junto com <code>capa-caixa.png</code>.
+      </div>
+    </div>
+  </div>
+
+
+
+<script>
+  function limparBotoes(){
+    document.querySelectorAll('.ctaRow .btn')
+      .forEach(btn => btn.classList.remove('active'));
+  }
+
+  function esconderCapa(){
+    document.getElementById("pagina-capa").style.display = "none";
+  }
+
+  function mostrarCapa(){
+    document.getElementById("pagina-capa").style.display = "block";
+  }
+
+  function abrirKit(){
+    limparBotoes();
+    esconderCapa();
+
+    document.getElementById("secao-kit").style.display = "block";
+    document.getElementById("secao-40min").style.display = "none";
+
+    document.querySelector('.ctaRow .btn.secondary').classList.add('active');
+    window.scrollTo(0,0);
+  }
+
+  function abrir40min(){
+    limparBotoes();
+    esconderCapa();
+
+    document.getElementById("secao-40min").style.display = "block";
+    document.getElementById("secao-kit").style.display = "none";
+
+    document.querySelector('.ctaRow .btn:not(.secondary)').classList.add('active');
+    window.scrollTo(0,0);
+  }
+  function abrirCompra(){
+    limparBotoes();
+    esconderCapa();
+
+    document.getElementById("secao-kit").style.display = "none";
+    document.getElementById("secao-40min").style.display = "none";
+    document.getElementById("secao-compra").style.display = "block";
+
+    // destaca o botão comprar
+    document.querySelector('.ctaRow .btn.comprar').classList.add('active');
+
+    window.scrollTo(0,0);
+  }
+
+  function voltarCapa(){
+    limparBotoes();
+
+    document.getElementById("secao-kit").style.display = "none";
+document.getElementById("secao-40min").style.display = "none";
+document.getElementById("secao-compra").style.display = "none";
+
+
+    mostrarCapa();
+    window.scrollTo(0,0);
+  }
+</script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Acesso ao Material | Falange</title>
+</head>
+<body>
+
+<h2>🔐 Acesso ao Material</h2>
+
+<button onclick="acessarMaterial()">
+  ACESSAR MATERIAL
+</button>
+
+<script>
+  function acessarMaterial() {
+    const senha = prompt("Digite a senha recebida no WhatsApp:");
+
+    if (!senha) return;
+
+    if (senha.startsWith("FLD-")) {
+      alert("Acesso liberado ✔️");
+      window.location.href = "jogo.html"; // ou pasta do jogo
+    } else {
+      alert("Senha inválida ❌");
+    }
+  }
+</script>
+
+</body>
+</html>
