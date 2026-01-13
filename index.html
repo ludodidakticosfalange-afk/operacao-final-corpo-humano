@@ -3,3314 +3,953 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Operação Escolar — Premium PLUS (Quiz + Pinça + Bandeja)</title>
+  <title>Operação Final — Corpo Humano | Falange Educación Lúdica</title>
+
+  <!-- Fonte estilo game/pixel (funciona no GitHub Pages) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
   <style>
     :root{
-      --bg:#070b18; --txt:#e8eefc; --muted:#a8b3cf;
-      --ok:#22c55e; --bad:#ef4444; --accent:#60a5fa; --warn:#f59e0b;
-      --panel2: rgba(0,0,0,.22);
+      --bg:#050814;
+      --bg2:#070b18;
+      --panel: rgba(255,255,255,.06);
       --stroke: rgba(255,255,255,.14);
-      --metal:#a0a0a0;
+      --txt:#e8eefc;
+      --muted:#a8b3cf;
+      --accent:#60a5fa;
+      --ok:#22c55e;
+      --warn:#f59e0b;
+      --bad:#ef4444;
+      --radius:18px;
+      --shadow: 0 18px 55px rgba(0,0,0,.45);
     }
     *{box-sizing:border-box}
     body{
-      margin:0; color:var(--txt);
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--txt);
       background:
-        radial-gradient(1200px 700px at 15% 10%, #1b2a6b 0%, var(--bg) 55%),
-        radial-gradient(900px 600px at 85% 85%, #0b5bd3 0%, rgba(0,0,0,0) 55%);
-    }
-    header{
-      padding:14px 16px;
-      display:flex; gap:12px; align-items:center; justify-content:space-between;
-      border-bottom:1px solid rgba(255,255,255,.08);
-      background: rgba(0,0,0,.14);
-      backdrop-filter: blur(10px);
-    }
-    .brand{display:flex; flex-direction:column; gap:2px;}
-    .brand b{letter-spacing:.3px}
-    .brand small{color:var(--muted)}
-    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
-    .btn{
-      cursor:pointer; border:none; border-radius:12px; padding:10px 12px;
-      font-weight:900; color:#081022; background:#e8eefc;
-      box-shadow: 0 12px 30px rgba(0,0,0,.28);
-      user-select:none; white-space:nowrap;
-    }
-    .btn.secondary{
-      color:var(--txt); background: rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.14); box-shadow:none;
-    }
-    .btn.ok{background: rgba(34,197,94,.95); color:#06110a;}
-    .btn.danger{background: rgba(239,68,68,.92); color:#fff;}
-    .wrap{
-  display:grid;
-  grid-template-columns: minmax(320px, 520px) 1fr;
-  gap:14px;
-  padding:14px;
-  max-width:1550px;
-  margin:0 auto;
-  align-items:start;
-}
+  linear-gradient(rgba(5,8,20,.88), rgba(5,8,20,.88)),
+  url("bg-pixel.png") center / cover no-repeat,
+  radial-gradient(1200px 700px at 15% 10%, #1b2a6b 0%, var(--bg) 55%),
+  radial-gradient(900px 600px at 85% 85%, #0b5bd3 0%, rgba(0,0,0,0) 55%),
+  linear-gradient(180deg, var(--bg), var(--bg2));
 
-@media (max-width: 980px){
-  .wrap{ grid-template-columns: 1fr; }
-}
-
-
-    .card{
-  background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
-  border:1px solid rgba(255,255,255,.10);
-  border-radius:16px; 
-  padding:14px;   /* ✅ normal */
-  box-shadow: 0 18px 60px rgba(0,0,0,.35);
-}
-
+    a{color:inherit}
+    .wrap{max-width:1100px;margin:0 auto;padding:22px 16px 64px}
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; margin-bottom:14px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      padding:10px 12px; border:1px solid var(--stroke);
+      border-radius:999px; background:rgba(0,0,0,.18);
+      backdrop-filter: blur(6px);
+    }
+    .brand .dot{
+      width:10px;height:10px;border-radius:50%;
+      background:var(--accent);
+      box-shadow:0 0 20px rgba(96,165,250,.75);
+    }
+    .brand strong{font-weight:800;letter-spacing:.2px}
     .pill{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:8px 10px;
       border:1px solid var(--stroke);
-      background: var(--panel2);
       border-radius:999px;
-      padding:7px 10px;
-      font-size:13px;
+      background:rgba(0,0,0,.18);
       color:var(--muted);
+      font-size:13px;
+      white-space:nowrap;
     }
-    .kpi{display:grid; grid-template-columns: repeat(4, 1fr); gap:6px; margin-top:4px;}
-    .kpi .box{
-      border:1px solid rgba(255,255,255,.10); border-radius:14px; padding:10px;
-      background: rgba(0,0,0,.18);
-    }
-    .kpi .box b{font-size:18px}
-    .kpi .box small{display:block; color:var(--muted); margin-top:2px}
-    .status{
-      margin-top:8px; padding:10px; border-radius:12px;
-      background: var(--panel2); border:1px dashed var(--stroke);
-      color:var(--muted); font-size:13px; min-height:62px; white-space:pre-wrap;
-    }
-    .small{color:var(--muted); font-size:12px}
-    .divider{border:0;border-top:1px solid rgba(255,255,255,.10);margin:12px 0}
 
-    /* Quiz */
-    .quizCard{
-      margin-top:0px;
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:16px;
-      padding:12px;
-      background: rgba(0,0,0,.18);
+    /* HERO */
+    .hero{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:18px;
+      align-items:stretch;
+      margin-top:12px;
     }
-    .qtitle{font-weight:900; font-size:14px; line-height:1.35}
-    .qsub{margin-top:6px; color:var(--muted); font-size:13px; line-height:1.35}
-    .options{display:grid; gap:10px; margin-top:10px}
-    .opt{
-      text-align:left;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color: var(--txt);
-      border-radius:14px;
-      padding:12px;
-      font-weight:900;
-      cursor:pointer;
-      transition: transform .05s ease, background .12s ease, border-color .12s ease;
+    @media (max-width: 920px){
+      .hero{grid-template-columns:1fr}
     }
-    .opt:active{transform: translateY(1px)}
-    .opt.correct{border-color: rgba(34,197,94,.55); background: rgba(34,197,94,.12)}
-    .opt.wrong{border-color: rgba(239,68,68,.55); background: rgba(239,68,68,.10)}
-    .lock{opacity:.7; pointer-events:none}
-
-   
-    /* Palco */
-    .stage{
-  position:relative;
-  overflow:hidden;
- height: min(64vh, 40px); /* 🔑 aqui está o segredo */
-  min-height: 720px;
-  border-radius:16px;
-}
-
-    .board{
-  width:100%; max-width:920px; margin:0 auto; display:block;
-  height: 100%;
-  max-height: 100%;
-  filter: drop-shadow(0 20px 55px rgba(0,0,0,.55));
-  position: relative;
-  z-index:2;
-}
-
-    .overlaySvg{position:absolute; inset:0; z-index:999; touch-action:none;}
-    #flash-red{
-      position:absolute; inset:0; background: rgba(255,0,0,.22);
-      display:none; pointer-events:none; z-index:20;
-    }
-    .shake{animation: shake-anim 0.1s infinite;}
-    @keyframes shake-anim{
-      0%{transform: translate(3px,3px)}
-      50%{transform: translate(-3px,-3px)}
-      100%{transform: translate(0,0)}
-    }
-    #nose-lamp{
-      position:absolute;
-      top: 68px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 38px;
-      height: 38px;
-      background: #660000;
-      border-radius: 50%;
-      z-index: 18;
-      border: 4px solid #330000;
-      box-shadow: inset 0 0 8px rgba(0,0,0,.45);
-      pointer-events:none;
-    }
-    .nose-buzz{
-      background: #ff0000 !important;
-      box-shadow: 0 0 40px #ff0000, 0 0 80px #ff0000, inset 0 0 10px white !important;
-    }
-#flash-green{
-  position:absolute; inset:0; background: rgba(34,197,94,.16);
-  display:none; pointer-events:none; z-index:20;
-}
-
-/* micro “clink” visual (bandeja dá um pulinho) */
-.tray-bounce{
-  animation: tray-bounce .16s ease-out 1;
-}
-@keyframes tray-bounce{
-  0%{ transform: translateY(0) scale(1); }
-  50%{ transform: translateY(2px) scale(1.02); }
-  100%{ transform: translateY(0) scale(1); }
-}
-
-    /* Login */
-    .overlayLogin{
-      position:fixed; inset:0; background: rgba(0,0,0,.58);
-      display:flex; align-items:center; justify-content:center;
-      padding:18px; z-index:999; backdrop-filter: blur(10px);
-    }
-    .modal{
-      width:min(980px, 100%);
-      display:grid; grid-template-columns: 1fr 1fr;
-      gap:14px; border-radius:18px; border:1px solid rgba(255,255,255,.10);
-      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
-      box-shadow: 0 30px 90px rgba(0,0,0,.55);
+    .card{
+      border:1px solid var(--stroke);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+      box-shadow: var(--shadow);
       overflow:hidden;
     }
-    @media(max-width:980px){ .modal{grid-template-columns:1fr} }
-    .modal .left{padding:16px; background: rgba(0,0,0,.18); border-right:1px solid rgba(255,255,255,.08);}
-    .modal .right{padding:16px;}
-    .modal h1{margin:0 0 6px 0; font-size:18px; letter-spacing:.3px;}
-    .modal p{margin:0; color:var(--muted); font-size:13px; line-height:1.35}
-    .modal .tip{
-      margin-top:12px; padding:10px; border-radius:12px;
-      border:1px solid rgba(96,165,250,.28);
-      background: rgba(96,165,250,.12);
-      color:#d9e9ff; font-size:13px;
+    .heroLeft{padding:18px}
+    .kicker{
+      display:inline-flex; align-items:center; gap:10px;
+      font-family: "Press Start 2P", system-ui;
+      font-size:12px;
+      color:rgba(255,255,255,.9);
+      opacity:.9;
     }
-    label{font-size:12px; color:var(--muted); display:block; margin-bottom:6px}
-    input{
-      width:100%; background: var(--panel2); color: var(--txt);
-      border:1px solid rgba(255,255,255,.14);
-      border-radius:12px; padding:10px 12px; font-weight:800; outline:none;
+    .kicker span{
+      display:inline-block;
+      width:10px; height:10px;
+      background:var(--ok);
+      box-shadow:0 0 18px rgba(34,197,94,.7);
     }
-    .err{
-      margin-top:10px; padding:10px; border-radius:12px;
-      border:1px solid rgba(239,68,68,.35);
-      background: rgba(239,68,68,.10);
-      color:#ffd0d0; font-size:13px; display:none;
-    }/* some só o "corpo antigo" e o fundo do SVG, sem sumir com os órgãos */
-svg.board > rect[stroke-width="10"]{ opacity:0 !important; }      /* fundo grande */
-svg.board *[stroke-width="5"]{ opacity:0 !important; }            /* cabeça/tronco/braços (pele) */
-/* esconder pulmões antigos do SVG (mantém lógica do jogo) */
-svg.board ellipse[cx="425"][cy="285"],
-svg.board ellipse[cx="475"][cy="285"],
-svg.board text[x="450"][y="285"]{
-  opacity:0 !important;
-}
-/* esconder medula espinhal antiga do SVG */
-svg.board rect[x="446"][y="160"][width="8"][height="230"],
-svg.board text[x="285"][y="210"]{
-  opacity:0 !important;
-}
+    h1{
+      margin:14px 0 10px;
+      font-family:"Press Start 2P", system-ui;
+      font-size:24px;
+      line-height:1.25;
+      letter-spacing: .6px;
+    }
+    .sub{
+      color:var(--muted);
+      margin:0 0 14px;
+      font-size:15px;
+      line-height:1.55;
+    }
+    .badges{
+      display:flex; flex-wrap:wrap; gap:10px;
+      margin:14px 0 18px;
+    }
+    .badge{
+      padding:10px 12px;
+      border:1px solid var(--stroke);
+      border-radius:999px;
+      background:rgba(0,0,0,.18);
+      font-size:13px;
+      color:rgba(255,255,255,.92);
+    }
+    .badge b{color:var(--accent)}
+    .ctaRow{
+      display:flex; flex-wrap:wrap; gap:10px;
+      margin-top:12px;
+      align-items:center;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:12px 14px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.18);
+      background: linear-gradient(180deg, rgba(96,165,250,.25), rgba(96,165,250,.12));
+      color: var(--txt);
+      text-decoration:none;
+      font-weight:800;
+      box-shadow: 0 14px 40px rgba(0,0,0,.35);
+    }
+    .btn:hover{filter:brightness(1.08)}
+    .btn.secondary{
+      background: rgba(0,0,0,.22);
+      color: rgba(255,255,255,.92);
+    }
 
-/* retângulo do esôfago (cor amarela clara) */
-svg.board rect[fill="#fde68a"] {
-  opacity: 0 !important;
-}
-/* esconder SOMENTE o coração antigo do SVG */
-svg.board path[d*="C428 288"]{ opacity:0 !important; }
-/* ocultar estômago antigo do SVG */
-svg.board path[fill="#fbbf24"]{ opacity:0 !important; }
-/* ocultar TODOS os textos (nomes dos órgãos) do SVG do SAM */
-svg.board text{
-  opacity: 0 !important;
-}
-/* oculta apenas o fígado antigo */
-svg.board path[d*="485 385"]{ opacity:0 !important; }
-/* ocultar pâncreas antigo do SVG */
-svg.board rect[fill="#fb7185"],
-svg.board text[x="492"][y="475"]{
-  opacity: 0 !important;
-}
-/* ocultar rins antigos do SVG */
-svg.board ellipse[fill="#60a5fa"],
-svg.board text{
-  pointer-events: none;
-}
-svg.board ellipse[fill="#60a5fa"]{
-  opacity: 0 !important;
-}
-/* Oculta o retângulo do intestino grosso */
-svg.board rect[fill="#10b981"] {
-  opacity: 0 !important;
-}
+    /* HERO RIGHT */
+    .heroRight{
+      display:flex;
+      flex-direction:column;
+    }
+    .boxArt{
+      position:relative;
+      aspect-ratio: 4/3;
+      background:
+        radial-gradient(700px 320px at 50% 30%, rgba(96,165,250,.25), rgba(0,0,0,0)),
+        rgba(0,0,0,.22);
+      border-bottom:1px solid var(--stroke);
+      overflow:hidden;
+    }
+    .boxArt img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      filter:saturate(1.05) contrast(1.05);
+    }
+    .boxArt .overlay{
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.55));
+      pointer-events:none;
+    }
+    .specs{
+      padding:14px 14px 16px;
+      display:grid;
+      gap:10px;
+    }
+    .spec{
+      display:flex; gap:10px; align-items:flex-start;
+      padding:10px 10px;
+      border:1px solid var(--stroke);
+      border-radius:14px;
+      background: rgba(0,0,0,.18);
+    }
+    .spec .icon{
+      width:28px;height:28px;border-radius:10px;
+      display:grid; place-items:center;
+      background: rgba(96,165,250,.18);
+      border:1px solid rgba(96,165,250,.25);
+      flex:0 0 auto;
+    }
+    .spec b{display:block}
+    .spec small{color:var(--muted);line-height:1.45}
 
-/* Oculta TODOS os textos dos órgãos */
-svg.board text {
-  opacity: 0 !important;
-}
-
-/* OCULTAR BEXIGA ANTIGA DO SVG */
-svg.board ellipse[cx="450"][cy="560"]{
-  opacity:0 !important;
-}
-
-svg.board text{
-  /* remove TODOS os nomes dos órgãos do SAM */
-  display:none !important;
-}
-/* OCULTAR INTESTINO DELGADO ANTIGO (SVG) */
-svg.board rect[x="400"][y="505"]{
-  opacity:0 !important;
-}
-/* ocultar TRAQUEIA antiga do SVG */
-svg.board rect[x="442"][y="180"]{
-  opacity:0 !important;
-}
-/* esconder o cérebro antigo (forma) */
-svg.board ellipse[cx="450"][cy="105"]{
-  opacity:0 !important;
-}
-
-/* esconder o texto CÉREBRO (linha do y=110) */
-svg.board text[x="450"][y="110"]{
-  opacity:0 !important;
-}
-
-/* Órgão guardado na BANDEJA (direita) */
-#trayHold{
-  position:absolute;
-  right: 22px;
-  top: 22px;
-  width: 140px;
-  height: 70px;
-  z-index: 40;
-  pointer-events:none;
-  display:none;
-  place-items:center;
-}
-#trayHold img{
-  height: 62px;
-  max-width: 130px;
-  object-fit: contain;
-  filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
-}
-
-/* Órgão guardado na BANDEJA DE SEPARAÇÃO (esquerda) */
-#tray2Hold{
-  position:absolute;
-  left: 22px;
-  top: 22px;
-  width: 160px;
-  height: 70px;
-  z-index: 40;
-  pointer-events:none;
-  display:none;
-  place-items:center;
-}
-#tray2Hold img{
-  height: 62px;
-  max-width: 150px;
-  object-fit: contain;
-  filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
-}
-/* ==============================
-   BORDA ILUMINADA DOS ÓRGÃOS
-   ============================== */
-
-.glow {
-  filter:
-    drop-shadow(0 0 4px var(--glow-color))
-    drop-shadow(0 0 10px var(--glow-color))
-    drop-shadow(0 0 18px var(--glow-color));
-}
-
-/* cores individuais por órgão */
-.glow-cerebro    { --glow-color: #a855f7; } /* roxo */
-.glow-pulmoes    { --glow-color: #38bdf8; } /* azul */
-.glow-coracao    { --glow-color: #ef4444; } /* vermelho */
-.glow-traqueia   { --glow-color: #22c55e; } /* verde */
-.glow-esofago    { --glow-color: #f59e0b; } /* laranja */
-.glow-figado     { --glow-color: #8b5cf6; } /* violeta */
-.glow-estomago   { --glow-color: #eab308; } /* amarelo */
-.glow-pancreas   { --glow-color: #fb7185; } /* rosa */
-.glow-rins       { --glow-color: #60a5fa; } /* azul claro */
-.glow-intestino_delgado    { --glow-color: #34d399; } /* verde água */
-.glow-intestino_grosso    { --glow-color: #10b981; } /* verde escuro */
-.glow-bexiga     { --glow-color: #93c5fd; } /* azul bebê */
-.glow-medula_espinhal     { --glow-color: #f97316; } /* laranja forte */
-/* FUNDO DO LADO DO BONECO (STAGE) */
-#stageBg{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  z-index:-1;          /* ✅ garante que fica atrás de tudo (bandejas, pinça, órgãos) */
-  opacity:.38;         /* ajuste: 0.28 (suave) até 0.55 (forte) */
-  filter:saturate(1.08) contrast(1.05);
-  pointer-events:none;
-}
-/* ===== Cabeçalho da carta (modo CARTAS) ===== */
-.cardHeader{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:10px 14px;
-  border-radius:14px;
-  background: rgba(96,165,250,.16);
-  border: 1px solid rgba(96,165,250,.35);
-  margin-bottom:10px;
-  font-weight:900;
-}
-#cardType{ letter-spacing:.4px; }
-#cardPts{ opacity:.95; }
-.cardHeader{ display:none; }
-/* ===== Visual premium da carta ===== */
-.quizCard{
-  border: 3px solid rgba(96,165,250,.45);
-  border-radius: 20px;
-  background:
-    radial-gradient(900px 400px at 10% 0%, rgba(96,165,250,.18), transparent 55%),
-    radial-gradient(700px 420px at 90% 20%, rgba(34,197,94,.10), transparent 60%),
-    rgba(2,6,23,.55);
-  box-shadow: 0 18px 40px rgba(0,0,0,.45);
-  backdrop-filter: blur(6px);
-}
-
-/* “selo” do cabeçalho */
-.cardHeader{
-  border-radius: 16px;
-  padding: 10px 14px;
-}
-
-/* classes de raridade (aplica na quizCard) */
-.card-easy{
-  border-color: rgba(34,197,94,.55);
-}
-.card-medium{
-  border-color: rgba(96,165,250,.65);
-}
-.card-hard{
-  border-color: rgba(245,158,11,.70);
-}
-.card-silhouette{
-  border-color: rgba(168,85,247,.70);
-}
-
-/* deixa o cabeçalho combinando com a raridade */
-.card-easy .cardHeader{
-  background: rgba(34,197,94,.16);
-  border: 1px solid rgba(34,197,94,.35);
-}
-.card-medium .cardHeader{
-  background: rgba(96,165,250,.16);
-  border: 1px solid rgba(96,165,250,.35);
-}
-.card-hard .cardHeader{
-  background: rgba(245,158,11,.16);
-  border: 1px solid rgba(245,158,11,.35);
-}
-.card-silhouette .cardHeader{
-  background: rgba(168,85,247,.16);
-  border: 1px solid rgba(168,85,247,.35);
-}
-
-/* tipografia mais “cartão” */
-.qtitle{
-  font-weight: 900;
-  letter-spacing: .2px;
-}
-.qsub{
-  opacity: .95;
-  line-height: 1.35;
-}
-/* ===== Silhueta (placeholder) ===== */
-.silhuetaBox{
-  margin: 12px 0 6px;
-  padding: 12px;
-  border-radius: 16px;
-  border: 2px dashed rgba(255,255,255,.22);
-  background: rgba(0,0,0,.18);
-}
-
-.silhuetaBox.hidden{ display:none; }
-
-.silhuetaLabel{
-  font-weight: 900;
-  letter-spacing: .6px;
-  opacity: .9;
-  margin-bottom: 8px;
-}
-
-.silhuetaArea{
-  height: 150px;
-  border-radius: 14px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight: 800;
-  opacity: .75;
-  background: rgba(255,255,255,.06);
-}
-/* imagem da silhueta */
-.silhuetaArea img{
-  max-width: 100%;
-  max-height: 150px;
-  object-fit: contain;
-  filter: drop-shadow(0 6px 12px rgba(0,0,0,.6));
-}
-.silhuetaFallback{ font-weight:800; opacity:.75; }
-.silhuetaArea{
-  height: 150px;
-  border-radius: 14px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight: 800;
-  opacity: .9;
-
-  background: rgba(120,180,255,.08);
-  border: 2px solid rgba(120,180,255,.45);
-
-  box-shadow:
-    0 0 8px rgba(120,180,255,.35),
-    0 0 18px rgba(120,180,255,.25),
-    inset 0 0 12px rgba(120,180,255,.18);
-
-  transition: box-shadow .3s ease;
-}
-.card-silhouette .silhuetaArea{
-  box-shadow:
-    0 0 14px rgba(120,180,255,.7),
-    0 0 30px rgba(120,180,255,.45),
-    inset 0 0 18px rgba(120,180,255,.25);
-}
-/* ===== Capa do baralho (modo CARTAS) ===== */
-.deckCover{
-  margin: 12px 0 14px;
-  padding: 14px;
-  border-radius: 18px;
-  border: 2px solid rgba(255,255,255,.14);
-  background: rgba(0,0,0,.18);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap: 12px;
-}
-
-.deckCover.hidden{ display:none; }
-
-#deckCoverImg{
-  width: 100%;
-  max-width: 320px;
-  max-height: 200px;   /* 🔑 isso resolve */
-  object-fit: contain;
-}
-
-
-.btnReveal{
-  border: 0;
-  cursor: pointer;
-  padding: 12px 16px;
-  border-radius: 14px;
-  font-weight: 900;
-  letter-spacing: .8px;
-  color: #0b1220;
-  background: rgba(255,255,255,.92);
-}
-.btnReveal:hover{ transform: translateY(-1px); }
-/* ===== Deck fechado ===== */
-.deckCover{
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.deckCoverInner{
-  width: 100%;
-  max-width: 520px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
-
-  transform-style: preserve-3d;
-  transform-origin: center;
-  transition: transform .65s cubic-bezier(.2,.9,.2,1), filter .65s, opacity .65s;
-  position: relative;
-}
-
-/* imagem do deck ocupa bem a carta */
-#deckCoverImg{
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-  border-radius: 18px;
-  object-fit: cover;
-  box-shadow: 0 26px 60px rgba(0,0,0,.62);
-}
-
-/* efeito de virada */
-.deckCover.flipOut .deckCoverInner{
-  transform: rotateX(80deg) translateY(-12px);
-  filter: blur(1px);
-  opacity: 0;
-}
-
-
-/* sombra mais “física” */
-#deckCoverImg{
-  box-shadow: 0 26px 60px rgba(0,0,0,.62);
-}
-
-/* Conteúdo entra suave */
-.cardRevealIn{
-  animation: cardRevealIn .38s ease;
-}
-@keyframes cardRevealIn{
-  from{ transform: translateY(10px) scale(.985); opacity: .3; }
-  to{ transform: translateY(0) scale(1); opacity: 1; }
-}
-
-/* ===== BRAND BAR ===== */
-#brandBar{
-  position: fixed;
-  top: 12px;
-  left: 16px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  z-index: 50;
-  pointer-events: none; /* não bloqueia cliques */
-}
-
-.brandLogo{
-  height: 42px;
-  max-width: 140px;
-  object-fit: contain;
-  filter:
-    drop-shadow(0 0 6px rgba(0,0,0,0.6))
-    drop-shadow(0 0 12px rgba(96,165,250,0.25));
-  opacity: 0.95;
-}
-
-/* ajustes individuais */
-.brandLogo.falange{
-  height: 44px;
-}
-
-.brandLogo.ludo{
-  height: 36px;
-  opacity: 0.9;
-}
-
-/* responsivo (tablet / celular) */
-@media (max-width: 768px){
-  #brandBar{
-    top: 8px;
-    left: 10px;
-    gap: 10px;
-  }
-  .brandLogo{
-    height: 32px;
-  }
-}
-/* ===== LOGOS NO HEADER (SEM SOBREPOR) ===== */
-.brandFlex{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.brandLogos{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:6px 10px;
-  border-radius:14px;
-  background: rgba(0,0,0,.18);
-  border: 1px solid rgba(255,255,255,.10);
-  box-shadow: 0 12px 30px rgba(0,0,0,.25);
-}
-
-.logoTop{
-  height: 34px;
-  max-width: 130px;
-  object-fit: contain;
-  filter: drop-shadow(0 0 8px rgba(96,165,250,.25));
-  opacity: .95;
-}
-
-.logoFalange{ height: 36px; }
-.logoLudo{ height: 28px; opacity:.9; }
-
-.brandText{
-  display:flex;
-  flex-direction:column;
-  gap:2px;
-}
-
-/* celular: reduz logos e quebra linha sem bagunçar */
-@media (max-width: 768px){
-  .logoTop{ height: 26px; max-width: 110px; }
-  .logoFalange{ height: 28px; }
-  .logoLudo{ height: 22px; }
-  .brandLogos{ padding:5px 8px; }
-  .brandText b{ font-size: 14px; }
-}
-
-  
-    /* ===== Timer + Certificado ===== */
-    .certOverlay{
-      position:fixed; inset:0; z-index:9999;
-      background:rgba(0,0,0,.6);
-      display:flex; align-items:center; justify-content:center;
+    /* SECTIONS */
+    .section{
+      margin-top:18px;
       padding:18px;
     }
-    .certCard{
-      width:min(980px, 100%);
-      background:rgba(10,16,40,.98);
-      border:1px solid rgba(255,255,255,.18);
-      border-radius:18px;
-      box-shadow:0 20px 60px rgba(0,0,0,.55);
-      padding:18px 18px 14px;
+    .section h2{
+      margin:0 0 10px;
+      font-family:"Press Start 2P", system-ui;
+      font-size:16px;
+      letter-spacing:.6px;
     }
-    .certHead{
-      display:flex; gap:14px; align-items:flex-start; justify-content:space-between;
-      border-bottom:1px solid rgba(255,255,255,.14);
-      padding-bottom:12px; margin-bottom:12px;
-    }
-    .certKicker{ color:var(--muted); font-size:12px; letter-spacing:.04em; text-transform:uppercase; }
-    .certTitle{ margin:.2rem 0 .2rem; font-size:22px; }
-    .certMeta{ color:var(--muted); font-size:13px; }
-    .certBadge{
-      min-width:90px; height:90px; border-radius:18px;
-      display:flex; align-items:center; justify-content:center;
-      background:linear-gradient(135deg, rgba(96,165,250,.25), rgba(34,197,94,.18));
-      border:1px solid rgba(255,255,255,.18);
-      font-weight:800; letter-spacing:.08em;
-    }
-    .certGrid{
+    .grid2{
       display:grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap:10px;
-      margin-top:10px;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
     }
-    .certBox{
-      background:rgba(0,0,0,.20);
-      border:1px solid rgba(255,255,255,.12);
+    @media (max-width: 920px){ .grid2{grid-template-columns:1fr} }
+
+    .list{
+      margin:0; padding:0; list-style:none;
+      display:grid; gap:10px;
+    }
+    .li{
+      padding:12px 12px;
+      border:1px solid var(--stroke);
       border-radius:14px;
-      padding:10px 12px;
+      background: rgba(0,0,0,.18);
+      line-height:1.5;
     }
-    .certLabel{ color:var(--muted); font-size:12px; margin-bottom:4px; }
-    .certValue{ font-size:16px; font-weight:700; }
-    .certResumo{
-      margin-top:12px;
-      background:rgba(0,0,0,.20);
-      border:1px solid rgba(255,255,255,.12);
-      border-radius:14px;
-      padding:10px 12px;
-      white-space:pre-wrap;
-      line-height:1.3;
+    .li .tag{
+      display:inline-block;
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      margin-bottom:8px;
+      color:rgba(255,255,255,.92);
+      background:rgba(255,255,255,.06);
     }
-    .certBtns{ justify-content:flex-end; margin-top:12px; }
-    .certFoot{ margin-top:10px; color:var(--muted); text-align:center; }
-
-    @media (max-width: 820px){
-      .certGrid{ grid-template-columns: 1fr; }
-      .certBadge{ display:none; }
+    .li p{margin:6px 0 0; color:var(--muted)}
+    .bncc{
+      font-size:14px;
+      color:var(--muted);
+      line-height:1.6;
     }
-
-    /* impressão do certificado */
-    @media print{
-      body{ background:#fff !important; color:#000 !important; }
-      header, .wrap, .no-print{ display:none !important; }
-      .certOverlay{ position:static !important; inset:auto !important; background:transparent !important; padding:0 !important; }
-      .certCard{
-        background:#fff !important; color:#000 !important;
-        border:2px solid #000 !important;
-        box-shadow:none !important;
-      }
-      .certKicker,.certMeta,.certLabel,.certFoot small{ color:#000 !important; }
-      .certBox,.certResumo{ background:#fff !important; border:1px solid #000 !important; }
-      .certBadge{ border:2px solid #000 !important; background:#fff !important; }
+    .bncc b{color:#fff}
+    .bncc code{
+      background: rgba(0,0,0,.28);
+      border:1px solid rgba(255,255,255,.14);
+      padding:2px 6px;
+      border-radius:8px;
+      color:rgba(255,255,255,.92);
     }
 
-</style>
+    /* FOOTER */
+    .footer{
+      margin-top:18px;
+      padding:18px;
+      text-align:center;
+      color:var(--muted);
+      border:1px solid var(--stroke);
+      border-radius:var(--radius);
+      background: rgba(0,0,0,.18);
+    }
+    .mini{
+      font-size:12px;
+      opacity:.92;
+      line-height:1.55;
+    }
+
+html{
+  scroll-behavior: smooth;
+}
+.btn.active{
+  outline:2px solid var(--accent);
+  box-shadow: 0 0 0 3px rgba(96,165,250,.25), 0 14px 40px rgba(0,0,0,.35);
+}
+/* ===============================
+   BOTÕES CHAMATIVOS (ATENÇÃO)
+   =============================== */
+
+/* animação de piscar */
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 0 rgba(96,165,250,0.0);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 22px rgba(96,165,250,0.85);
+    transform: scale(1.05);
+  }
+  100% {
+    box-shadow: 0 0 0 rgba(96,165,250,0.0);
+    transform: scale(1);
+  }
+}
+
+/* BOTÃO PRINCIPAL – 40 MIN */
+.btn {
+  background: linear-gradient(180deg, #22c55e, #16a34a);
+  color: #ffffff;
+  font-weight: 900;
+  animation: pulseGlow 1.8s infinite;
+}
+
+/* BOTÃO SECUNDÁRIO – KIT */
+.btn.secondary {
+  background: linear-gradient(180deg, #f59e0b, #d97706);
+  color: #1f1300;
+  animation: pulseGlow 2.2s infinite;
+}
+
+/* quando o botão estiver ATIVO (clicado) */
+.btn.active,
+.btn.secondary.active {
+  animation: none;
+  box-shadow: 0 0 28px rgba(255,255,255,0.9);
+  transform: scale(1.08);
+}
+
+/* BOTÃO DE COMPRA — VERMELHO */
+.btn.comprar{
+  background: linear-gradient(180deg, #ef4444, #b91c1c);
+  border: 1px solid rgba(255,255,255,.25);
+  color: #ffffff;
+  font-weight: 900;
+  letter-spacing: .5px;
+  box-shadow:
+    0 0 0 2px rgba(239,68,68,.35),
+    0 14px 40px rgba(0,0,0,.45);
+}
+
+.btn.comprar:hover{
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+}
+
+/* ============================================================
+   PARTES COLORIDAS (PARTE 1, PARTE 2, PARTE 3...)
+   (SÓ VISUAL — NÃO MEXE EM LÓGICA)
+   ============================================================ */
+
+.li.kitPart{
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(0,0,0,.18);
+}
+
+/* faixa superior com cor da parte */
+.li.kitPart::before{
+  content:"";
+  position:absolute;
+  top:0; left:0; right:0;
+  height:6px;
+  background: var(--corParte, #60a5fa);
+  opacity:.95;
+}
+
+/* brilho leve no fundo */
+.li.kitPart::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(900px 420px at 15% 10%,
+      color-mix(in srgb, var(--corParte, #60a5fa) 22%, transparent) 0%,
+      transparent 55%),
+    radial-gradient(700px 360px at 90% 85%,
+      color-mix(in srgb, var(--corParte, #60a5fa) 14%, transparent) 0%,
+      transparent 60%);
+  pointer-events:none;
+  opacity:.9;
+}
+
+/* mantém o conteúdo acima das camadas */
+.li.kitPart > *{ position:relative; z-index:1; }
+
+/* cores por parte */
+.parte-1{ --corParte:#22c55e; } /* verde */
+.parte-2{ --corParte:#3b82f6; } /* azul */
+.parte-3{ --corParte:#f59e0b; } /* laranja */
+.parte-4{ --corParte:#8b5cf6; } /* roxo */
+.parte-5{ --corParte:#ef4444; } /* vermelho */
+.parte-6{ --corParte:#14b8a6; } /* teal */
+/* =========================
+   LOGOS NO TOPO (HEADER)
+   ========================= */
+
+.logosTop{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:6px 12px;
+}
+
+.logosTop img{
+  height:34px;          /* tamanho ideal para topo */
+  width:auto;
+  object-fit:contain;
+  filter:
+    drop-shadow(0 0 8px rgba(255,255,255,.35));
+}
+
+/* mobile */
+@media (max-width:600px){
+  .logosTop img{
+    height:28px;
+  }
+}
+
+  </style>
 </head>
 
 <body>
-<header>
-<!-- LOGOS SUPERIOR -->
+  <div class="wrap">
 
-
-  <div class="brand brandFlex">
-  <div class="brandLogos">
-    <img src="falange.png" alt="Falange Educación Lúdica" class="logoTop logoFalange">
-    <img src="ludodidakticos.png.jpg" alt="Ludo Didakticos" class="logoTop logoLudo">
-  </div>
-
-  <div class="brandText">
-    <b>Operação Escolar — Premium PLUS</b>
-    <small>Quiz + Pinça + Bandeja • Sem erro de margem (só erra se órgão diferente do correto)</small>
-  </div>
-</div>
-
-  <div class="row">
-    <button class="btn secondary" id="btnModoAcao">Ação: BANDEJA</button>
-<button class="btn secondary" id="btnModoPergunta">Modo: QUIZ</button>
-    <button class="btn secondary" id="btnModoQuiz">Quiz: Misturado</button>
-    <button class="btn secondary" id="btnSom">Som: ON</button>
-    <button class="btn secondary" id="btnTempo">Tempo: OFF</button>
-    <button class="btn" id="btnNova">Nova rodada</button>
-  </div>
-</header>
-
-<main class="wrap">
-  <section class="card">
-    <div class="row">
-      <div class="pill">Pontos: <b id="score">0</b></div>
-      <div class="pill">Vidas: <b id="tries">3</b></div>
-      <div class="pill">Rodadas: <b id="rounds">0</b></div>
-      <div class="pill">Fase: <b id="phase">QUIZ</b></div>
-      <div class="pill">Tempo: <b id="timeLeft">--:--</b></div>
-    </div>
-
-    <div class="kpi">
-      <div class="box"><b id="qHits">0</b><small>Acertos (Quiz)</small></div>
-      <div class="box"><b id="qMiss">0</b><small>Erros (Quiz)</small></div>
-      <div class="box"><b id="deliverHits">0</b><small>Acertos (Entrega)</small></div>
-      <div class="box"><b id="deliverMiss">0</b><small>Erros (Entrega)</small></div>
-    </div>
-
-    <div class="quizCard" id="cardBox">
-
-  <div class="cardHeader">
-    <span id="cardType">CARTA</span>
-    <span id="cardPts">0 pts</span>
-  </div>
-
-<div id="deckCover" class="deckCover hidden">
-  <div class="deckCoverInner">
-    <img id="deckCoverImg" src="deck_capa.png" alt="Baralho fechado">
-    <button id="btnRevelarCarta" class="btnReveal">REVELAR CARTA</button>
-  </div>
+    <div class="brand logosTop">
+  <img src="falange.png" alt="Falange Educación Lúdica">
+  <img src="ludodidakticos.png.jpg" alt="Ludodidakticos">
 </div>
 
 
-  <div class="qtitle" id="qtitle">Sem pergunta.</div>
-  <div class="qsub" id="qsub"></div>
-<div id="silhuetaBox" class="silhuetaBox hidden">
-  <div class="silhuetaLabel">SILHUETA</div>
-  <div class="silhuetaArea">
-    <img id="silhuetaImg" src="" alt="Silhueta do órgão" style="display:none;">
-    <div id="silhuetaFallback" class="silhuetaFallback" style="display:none;">Silhueta indisponível</div>
+    <!-- =========================
+         PÁGINA 1 (VENDA)
+    ========================== -->
+<section id="pagina-capa">   
+ <div class="hero">
+
+      <div class="card heroLeft">
+        <div class="kicker"><span></span> JOGO EDUCACIONAL • CIÊNCIAS</div>
+
+        <h1>OPERAÇÃO FINAL<br>CORPO HUMANO</h1>
+
+        <p class="sub">
+          Um <b>kit completo</b> para aulas práticas e envolventes sobre <b>sistemas do corpo humano</b>,
+          com versões <b>digitais</b> (projetor/celular) e <b>imprimíveis</b> — pensado para o
+          <b>6º ano</b> e com apoio para <b>AEE</b>.
+        </p>
+
+        <div class="badges">
+          <div class="badge">🎯 <b>Professor escolhe</b>: Quiz ou Cartas</div>
+          <div class="badge">⏱️ Controle de tempo</div>
+          <div class="badge">🏅 Certificado automático</div>
+          <div class="badge">🔊 Áudio e acessibilidade</div>
+        </div>
+
+       <div class="ctaRow">
+  <button onclick="abrirKit()" class="btn secondary">
+    Ver o que vem no kit
+  </button>
+
+  <button onclick="abrir40min()" class="btn">
+    Ver como aplicar em 40 minutos
+  </button>
+
+  <button onclick="abrirCompra()" class="btn comprar">
+    💳 COMPRAR AGORA
+  </button>
+  
+  <a href="acesso.html" class="btn">
+  🔐 ACESSAR MATERIAL
+</a>
+
+</div>
+
+        <div class="section card" style="margin-top:16px;">
+          <h2 id="bncc">POR QUE ESSE PRODUTO É IMPORTANTE</h2>
+          <p class="bncc">
+            Este material fortalece uma aula ativa, em que o aluno aprende por <b>ação</b> e <b>decisão</b>
+            (em vez de só copiar). Ele apoia a compreensão de que o corpo humano é um conjunto de
+            <b>sistemas integrados</b> e promove <b>autocuidado</b>, linguagem científica e participação.
+            <br><br>
+            <b>Alinhamento BNCC (Ciências – 6º ano):</b><br>
+            • <code>EF06CI06</code> — organismos como arranjo de sistemas (modelos físicos/digitais)<br>
+            • <code>EF06CI07</code> — sistema nervoso e coordenação das ações motoras e sensoriais<br>
+            • <code>EF06CI09</code> — interação entre sistemas muscular/ósseo/nervoso<br>
+            <br>
+            <b>AEE:</b> atividades multimodais (visual, manipulação, áudio), linguagem objetiva, repetição com variação,
+            e opção de uso individual ou em grupo.
+          </p>
+        </div>
+      </div>
+
+      <div class="card heroRight">
+        <!-- TROQUE a imagem abaixo pelo seu arquivo real -->
+        <div class="boxArt">
+          <!-- coloque na pasta do repo: capa-caixa.png -->
+          <img src="capa-caixa.png" alt="Capa e caixa do jogo Operação Final Corpo Humano">
+          <div class="overlay"></div>
+        </div>
+
+        <div class="specs">
+          <div class="spec">
+            <div class="icon">🎥</div>
+            <div>
+              <b>Funciona no projetor</b>
+              <small>Ideal para sala cheia: visual grande e dinâmico.</small>
+            </div>
+          </div>
+          <div class="spec">
+            <div class="icon">🖨️</div>
+            <div>
+              <b>Também é imprimível</b>
+              <small>Para professores que preferem atividade física/papel.</small>
+            </div>
+          </div>
+          <div class="spec">
+            <div class="icon">♿</div>
+            <div>
+              <b>Apoio para AEE</b>
+              <small>Recursos de acessibilidade e materiais ilustrados.</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+</section>
+
+<section id="secao-kit" style="display:none;">
+
+    <!-- =========================
+         PÁGINA 2 (CONTEÚDO DO KIT)
+    ========================== -->
+    <div id="conteudo" class="card section" style="margin-top:18px;">
+
+      <h2>O QUE VEM NO KIT</h2>
+
+
+
+      <div class="grid2">
+        <ul class="list">
+
+          <!-- PARTE 1 -->
+          <li class="li kitPart parte-1">
+            <span class="tag">1) Jogo principal virtual</span>
+            <b>Operação Final — modo completo</b>
+            <p>Versão principal do jogo para rodar no computador e usar no projetor, com dinâmica de “operação”, pontuação e desafio.</p>
+
+            <div class="grid2" style="margin-top:12px;margin-bottom:2px;">
+              <div class="card" style="padding:12px;">
+                <div style="font-weight:800;margin-bottom:8px;">🎬 Demonstração — Computador</div>
+                <video controls playsinline preload="metadata" style="width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.14);">
+                  <source src="comp_operacao.mp4" type="video/mp4">
+                  Seu navegador não suporta vídeo.
+                </video>
+                <div style="color:var(--muted);font-size:12px;margin-top:8px;line-height:1.4;">
+                  Dica: coloque o arquivo <b>telainicial.mp4</b> na mesma pasta do <b>index.html</b>.
+                </div>
+              </div>
+
+              <div class="card" style="padding:12px;">
+                <div style="font-weight:800;margin-bottom:8px;">🎬 Demonstração — celular</div>
+                <video controls playsinline preload="metadata" style="width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.14);">
+                  <source src="cel_jogo_operacao.mp4" type="video/mp4">
+                  Seu navegador não suporta vídeo.
+                </video>
+                <div style="color:var(--muted);font-size:12px;margin-top:8px;line-height:1.4;">
+                  Depois você só troca o nome do arquivo (ex: <b>gameplay.mp4</b>).
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <!-- PARTE 2 -->
+          <li class="li kitPart parte-2">
+            <span class="tag">2) Tabuleiro + cartas virtual</span>
+            <b>Alternativa sem impressão</b>
+            <p>Se o professor não quiser o impresso, ele usa o tabuleiro e as cartas digitais para conduzir a aula do mesmo jeito.</p>
+
+            <div class="grid2" style="margin-top:12px;margin-bottom:2px;">
+              <div class="card" style="padding:12px;">
+                <div style="font-weight:800;margin-bottom:8px;">🎬 Demonstração — Computador</div>
+                <video controls playsinline preload="metadata" style="width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.14);">
+                  <source src="cartas.tabuleiro.virtual.mp4" type="video/mp4">
+                  Seu navegador não suporta vídeo.
+                </video>
+                <div style="color:var(--muted);font-size:12px;margin-top:8px;line-height:1.4;">
+                  Dica: coloque o arquivo <b>telainicial.mp4</b> na mesma pasta do <b>index.html</b>.
+                </div>
+              </div>
+
+              <div class="card" style="padding:12px;">
+                <div style="font-weight:800;margin-bottom:8px;">🎬 Demonstração — Celular</div>
+                <video controls playsinline preload="metadata" style="width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.14);">
+                  <source src="cel_carta_tabuleiro_virtual.mp4" type="video/mp4">
+                  Seu navegador não suporta vídeo.
+                </video>
+                <div style="color:var(--muted);font-size:12px;margin-top:8px;line-height:1.4;">
+                  Depois você só troca o nome do arquivo (ex: <b>gameplay.mp4</b>).
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <!-- PARTE 3 -->
+          <li class="li kitPart parte-3">
+            <span class="tag">3) Jogo impresso</span>
+            <b>Versão física para sala</b>
+            <p>Atividade pronta para imprimir e aplicar, com foco em aprendizagem ativa e participação da turma.</p>
+          </li>
+
+        </ul>
+
+        <ul class="list">
+
+          <!-- PARTE 4 -->
+          <li class="li kitPart parte-4">
+            <span class="tag">4) Memória virtual + impresso (AEE)</span>
+            <b>Com áudio e bem ilustrado</b>
+            <p>Versão adaptada, pensada para acessibilidade, reforço de vocabulário e identificação dos órgãos/sistemas.</p>
+
+            <div class="grid2" style="margin-top:12px;margin-bottom:2px;">
+              <div class="card" style="padding:12px;">
+                <div style="font-weight:800;margin-bottom:8px;">🎬 Demonstração — Computador</div>
+                <video controls playsinline preload="metadata" style="width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.14);">
+                  <source src="computador_memoria_aee.mp4" type="video/mp4">
+                  Seu navegador não suporta vídeo.
+                </video>
+                <div style="color:var(--muted);font-size:12px;margin-top:8px;line-height:1.4;">
+                  Dica: coloque o arquivo <b>telainicial.mp4</b> na mesma pasta do <b>index.html</b>.
+                </div>
+              </div>
+
+              <div class="card" style="padding:12px;">
+                <div style="font-weight:800;margin-bottom:8px;">🎬 Demonstração — Celular</div>
+                <video controls playsinline preload="metadata" style="width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.14);">
+                  <source src="cel.memoria.aee.mp4" type="video/mp4">
+                  Seu navegador não suporta vídeo.
+                </video>
+                <div style="color:var(--muted);font-size:12px;margin-top:8px;line-height:1.4;">
+                  Depois você só troca o nome do arquivo (ex: <b>gameplay.mp4</b>).
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <!-- PARTE 5 -->
+          <li class="li kitPart parte-5">
+            <span class="tag">5) Memória virtual (Ens. Fundamental)</span>
+            <b>Versão geral</b>
+            <p>Para revisão, aquecimento e fixação do conteúdo em formato leve e rápido.</p>
+
+            <div class="grid2" style="margin-top:12px;margin-bottom:2px;">
+              <div class="card" style="padding:12px;">
+                <div style="font-weight:800;margin-bottom:8px;">🎬 Demonstração — Computador</div>
+                <video controls playsinline preload="metadata" style="width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.14);">
+                  <source src="memoria_fundamental.mp4" type="video/mp4">
+                  Seu navegador não suporta vídeo.
+                </video>
+                <div style="color:var(--muted);font-size:12px;margin-top:8px;line-height:1.4;">
+                  Dica: coloque o arquivo <b>telainicial.mp4</b> na mesma pasta do <b>index.html</b>.
+                </div>
+              </div>
+
+              <div class="card" style="padding:12px;">
+                <div style="font-weight:800;margin-bottom:8px;">🎬 Demonstração — Celular</div>
+                <video controls playsinline preload="metadata" style="width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.14);">
+                  <source src="cel_memoria_fundamental.mp4" type="video/mp4">
+                  Seu navegador não suporta vídeo.
+                </video>
+                <div style="color:var(--muted);font-size:12px;margin-top:8px;line-height:1.4;">
+                  Depois você só troca o nome do arquivo (ex: <b>gameplay.mp4</b>).
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <!-- PARTE 6 -->
+          <li class="li kitPart parte-6">
+            <span class="tag">6) Impressos extras</span>
+            <b>Quebra-cabeça + sopa de letras</b>
+            <p>Quebra-cabeça impresso com partes do corpo e sopa de letras para reforço e avaliação formativa.</p>
+          </li>
+<div class="grid2" style="margin-top:12px;margin-bottom:2px;">
+              <div class="card" style="padding:12px;">
+                <div style="font-weight:800;margin-bottom:8px;">🎬 Demonstração</div>
+                <video controls playsinline preload="metadata" style="width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.14);">
+                  <source src="bonus_impresso.mp4" type="video/mp4">
+                  Seu navegador não suporta vídeo.
+                </video>
+                <div style="color:var(--muted);font-size:12px;margin-top:8px;line-height:1.4;">
+                  Dica: coloque o arquivo <b>telainicial.mp4</b> na mesma pasta do <b>index.html</b>.
+                </div>
+              </div>
+        </ul>
+
+      </div>
+    </div>
+
+<button onclick="voltarCapa()" class="btn secondary">
+  ⬅ Voltar para a capa
+</button>
+
+</section>
+
+<section id="secao-40min" 
+style="
+display:none;
+  max-width:1200px;
+  margin:80px auto;
+  padding:48px 32px;
+  background:linear-gradient(180deg,#081a2c,#0b2540);
+  color:#ffffff;
+  border-radius:22px;
+  font-family:'Segoe UI',Arial,Helvetica,sans-serif;
+  box-shadow:0 0 0 2px rgba(255,255,255,0.05);
+">
+
+  <h2 style="
+    font-size:36px;
+    margin-bottom:18px;
+    letter-spacing:0.5px;
+  ">
+    ⏱️ Como aplicar em 40 minutos
+    </h2>
+
+  <p style="
+    font-size:18px;
+    line-height:1.7;
+    max-width:950px;
+    color:#d6e4ff;
+  ">
+    O <strong>Operação Final – Corpo Humano</strong> não é apenas um jogo.
+
+    Ele foi desenvolvido como uma <strong>aula pronta de Ciências</strong>,
+    pensada para a realidade do professor do Ensino Fundamental e do AEE.
+    Em <strong>40 minutos</strong>, o conteúdo é apresentado, trabalhado,
+    fixado e avaliado de forma lúdica, organizada e alinhada à BNCC.
+  </p>
+
+  <div style="
+    margin-top:40px;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:32px;
+  ">
+
+    <!-- ETAPA 1 -->
+    <div style="
+      padding:24px;
+      background:#0f2f52;
+      border-radius:16px;
+      border-left:6px solid #4da3ff;
+    ">
+      <h3 style="font-size:22px;margin-bottom:10px;">1️⃣ Abertura — 5 minutos</h3>
+      <p style="font-size:16px;line-height:1.6;color:#e7f0ff;">
+        O professor apresenta o tema da aula (<strong>Corpo Humano</strong>) e ativa
+        o conhecimento prévio dos alunos com uma pergunta simples e visual, como:
+        <em>“Quais órgãos do corpo humano são essenciais para a vida?”</em>.
+        O jogo é projetado ou apresentado por meio das cartas, despertando o interesse imediato da turma.
+      </p>
+    </div>
+
+    <!-- ETAPA 2 -->
+    <div style="
+      padding:24px;
+      background:#0f2f52;
+      border-radius:16px;
+      border-left:6px solid #22c55e;
+    ">
+      <h3 style="font-size:22px;margin-bottom:10px;">2️⃣ Jogo principal — 20 minutos</h3>
+      <p style="font-size:16px;line-height:1.6;color:#e7f0ff;">
+        O professor escolhe o modo de jogo conforme o objetivo da aula:
+      </p>
+      <ul style="font-size:16px;line-height:1.8;color:#e7f0ff;margin-left:20px;">
+        <li>🎮 <strong>Modo Quiz</strong> — perguntas, desafios e tempo controlado</li>
+        <li>🃏 <strong>Modo Cartas</strong> — ao acertar, o aluno identifica e posiciona corretamente o órgão</li>
+      </ul>
+      <p style="font-size:16px;line-height:1.6;color:#e7f0ff;">
+        O jogo possui controle de tempo, pontuação e disputa saudável, podendo ser aplicado
+        individualmente ou em grupos, no projetor, computador ou celular.
+      </p>
+    </div>
+
+    <!-- ETAPA 3 -->
+    <div style="
+      padding:24px;
+      background:#0f2f52;
+      border-radius:16px;
+      border-left:6px solid #facc15;
+    ">
+      <h3 style="font-size:22px;margin-bottom:10px;">3️⃣ Fixação do conteúdo — 10 minutos</h3>
+      <p style="font-size:16px;line-height:1.6;color:#e7f0ff;">
+        Após o jogo principal, o professor reforça a aprendizagem com as atividades do kit:
+      </p>
+      <ul style="font-size:16px;line-height:1.8;color:#e7f0ff;margin-left:20px;">
+        <li>🧠 Jogo da memória (digital ou impresso, com áudio)</li>
+        <li>🧩 Quebra-cabeça do corpo humano</li>
+        <li>🔤 Sopa de letras temática</li>
+      </ul>
+      <p style="font-size:16px;line-height:1.6;color:#e7f0ff;">
+        Essas atividades fortalecem a memorização, a associação visual e a compreensão dos conceitos,
+        sendo também adequadas para alunos do <strong>AEE</strong>.
+      </p>
+    </div>
+
+    <!-- ETAPA 4 -->
+    <div style="
+      padding:24px;
+      background:#0f2f52;
+      border-radius:16px;
+      border-left:6px solid #ef4444;
+    ">
+      <h3 style="font-size:22px;margin-bottom:10px;">4️⃣ Fechamento e avaliação — 5 minutos</h3>
+      <p style="font-size:16px;line-height:1.6;color:#e7f0ff;">
+        O professor retoma os principais conceitos, esclarece dúvidas e consolida a aprendizagem.
+        Na versão digital, o sistema pode gerar <strong>certificado automático de conclusão</strong>,
+        com data e horário, garantindo o registro da atividade realizada.
+      </p>
+    </div>
+
   </div>
-</div>
 
+  <!-- RESULTADO -->
+  <div style="
+    margin-top:42px;
+    padding:28px;
+    background:#081a2c;
+    border-radius:18px;
+    border:2px dashed rgba(255,255,255,0.15);
+  ">
+    <h3 style="font-size:24px;margin-bottom:12px;">🎯 Resultado da aula</h3>
+    <p style="font-size:16px;line-height:1.7;color:#d6e4ff;">
+      Em apenas uma aula, o professor trabalha Ciências de forma ativa,
+      mantém a turma engajada, avalia a aprendizagem e cumpre os objetivos da BNCC
+      utilizando um recurso moderno, acessível e organizado.
+    </p>
+  </div>
+<button onclick="voltarCapa()" class="btn secondary">
+  ⬅ Voltar para a capa
+</button>
 
-  <div class="options" id="options"></div>
+</section>
 
-  <div class="small" style="margin-top:10px" id="qtip"></div>
-</div>
+<section id="secao-compra" style="display:none;">
 
+  <div class="card section" style="
+    max-width:520px;
+    margin:0 auto;
+    background:linear-gradient(180deg,#3b0000,#5a0000);
+    border:2px solid rgba(255,255,255,.18);
+    border-radius:22px;
+    text-align:center;
+  ">
 
-    
+    <h2 style="font-size:28px;margin-bottom:14px;">
+      Operação Final — Corpo Humano
+    </h2>
 
-    <div class="status" id="status">Faça login para iniciar.</div>
+    <p style="font-size:15px;line-height:1.6;opacity:.95;">
+      ✔ Jogo principal digital<br>
+      ✔ Material imprimível completo<br>
+      ✔ Jogos extras (memória, quebra-cabeça, sopa)<br>
+      ✔ Alinhado à BNCC • 6º ano • AEE
+    </p>
 
-    <hr class="divider">
-
-    <div class="row">
-      <button class="btn secondary" id="btnReset" disabled>Zerar</button>
-      <button class="btn danger" id="btnEncerrar" disabled>Encerrar</button>
+    <div style="
+      margin:22px 0;
+      font-size:36px;
+      font-weight:900;
+      color:#22c55e;
+    ">
+      R$ 97,00
     </div>
 
-    <div class="small" style="margin-top:10px">
-      <b>Como jogar:</b> acerta o quiz → (BANDEJA: clique no órgão e arraste até a bandeja).
-      <br><b>Sem margem:</b> não existe erro por borda/metal. Só erra se for peça/órgão diferente do correto.
-    </div>
-  </section>
+    <a
+      href="https://wa.me/5596999741475?text=Olá!%20Tenho%20interesse%20no%20produto:%0A%0A📦%20Produto:%20Operação%20Final%20—%20Corpo%20Humano%0A💰%20Valor:%20R$%2097,00"
+      class="btn comprar"
+    >
+      💳 COMPRAR AGORA
+    </a>
 
-  <section class="card stage" id="stage">
-<img id="stageBg" src="bg-hospital-topdown-ludico.png" alt="" aria-hidden="true">
+    <!-- BOTÃO VOLTAR (AQUI É O LUGAR CERTO) -->
+    <button onclick="voltarCapa()" class="btn secondary" style="margin-top:14px;">
+      ⬅ Voltar para a capa
+    </button>
 
-    <div id="flash-red"></div>
-<div id="flash-green"></div>
+    <p style="margin-top:14px;font-size:13px;opacity:.85;">
+      Atendimento direto com o criador • suporte garantido
+    </p>
 
-    <div id="nose-lamp" aria-hidden="true"></div>
-<!-- Órgão guardado na BANDEJA correta -->
-<div id="trayHold" aria-hidden="true"></div>
+  </div>
 
-<!-- Órgão guardado na BANDEJA de separação -->
-<div id="tray2Hold" aria-hidden="true"></div>
+</section>
 
-<img src="corpo_medio.png" class="glow glow-corpo" alt="Corpo" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);height:100%;max-height:100%;object-fit:contain;z-index:0;pointer-events:none;">
-
-<img src="medula_espinhal.png" id="org-medula_espinhal" class="glow glow-medula_espinhal" alt="Medula espinhal" style="position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);height:62%;object-fit:contain;z-index:1;pointer-events:none;">
-
-<img src="traqueia.png" id="org-traqueia" class="glow glow-traqueia" alt="Traqueia" style="position:absolute;top:29%;left:50%;transform:translate(-50%,-50%);height:15%;z-index:12;pointer-events:none;">
-
-<img src="esofago.png" id="org-esofago" class="glow glow-esofago" alt="Esôfago" style="position:absolute;top:39%;left:49%;transform:translate(-50%,-50%);height:20%;max-height:20%;object-fit:contain;z-index:13;pointer-events:none;">
-
-<img src="pulmoes.png" id="org-pulmoes" class="glow glow-pulmoes" alt="Pulmões" style="position:absolute;top:35%;left:50%;transform:translate(-50%,-50%);height:45%;max-height:45%;object-fit:contain;z-index:14;pointer-events:none;">
-
-<img src="coracao.png" id="org-coracao" class="glow glow-coracao" alt="Coração" style="position:absolute;top:36%;left:52%;transform:translate(-50%,-50%);height:17%;max-height:17%;object-fit:contain;z-index:15;pointer-events:none;">
-
-<img src="figado.png" id="org-figado" class="glow glow-figado" alt="Fígado" style="position:absolute;top:47%;left:47%;transform:translate(-50%,-50%);height:13%;max-height:13%;object-fit:contain;z-index:16;pointer-events:none;">
-
-<img src="estomago.png" id="org-estomago" class="glow glow-estomago" alt="Estômago" style="position:absolute;top:49%;left:53%;transform:translate(-50%,-50%);height:17%;max-height:17%;object-fit:contain;z-index:17;pointer-events:none;">
-
-<img src="pancreas.png" id="org-pancreas" class="glow glow-pancreas" alt="Pâncreas" style="position:absolute;top:50%;left:54%;transform:translate(-50%,-50%);height:8%;max-height:8%;object-fit:contain;z-index:18;pointer-events:none;">
-
-<img src="rins.png" id="org-rins" class="glow glow-rins" alt="Rins" style="position:absolute;top:55%;left:50%;transform:translate(-50%,-50%);height:10%;z-index:19;pointer-events:none;">
-
-<img src="intestino_delgado.png" id="org-intestino_delgado" class="glow glow-intestino_delgado" alt="Intestino Delgado" style="position:absolute;top:60%;left:50%;transform:translate(-50%,-50%);height:12%;max-height:12%;z-index:20;pointer-events:none;">
-
-<img src="intestino_grosso.png" id="org-intestino_grosso" class="glow glow-intestino_grosso" alt="Intestino Grosso" style="position:absolute;top:61%;left:50%;transform:translate(-50%,-50%);height:22%;z-index:21;pointer-events:none;">
-
-<img src="bexiga.png" id="org-bexiga" class="glow glow-bexiga" alt="Bexiga" style="position:absolute;top:68%;left:50%;transform:translate(-50%,-50%);height:10%;max-height:10%;object-fit:contain;z-index:22;pointer-events:none;">
-
-<img src="cerebro.png" id="org-cerebro" class="glow glow-cerebro" alt="Cérebro" style="position:absolute;top:4%;left:50%;transform:translateX(-50%);height:12%;z-index:25;pointer-events:none;">
-
-
-
-    <!-- Tabuleiro visual -->
-    <svg class="board" viewBox="0 0 900 660">
-      <defs>
-        <linearGradient id="bgp" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#eef4ff" stop-opacity=".98"/>
-          <stop offset="1" stop-color="#cfe0ff" stop-opacity=".86"/>
-        </linearGradient>
-      </defs>
-      <rect x="0" y="0" width="900" height="660" rx="24" fill="url(#bgp)" stroke="#0b1020" stroke-width="10"/>
-
-      <circle cx="450" cy="105" r="64" fill="#ffd7c2" stroke="#1f2937" stroke-width="5"/>
-      <rect x="360" y="170" width="180" height="390" rx="80" fill="#ffd7c2" stroke="#1f2937" stroke-width="5"/>
-      <rect x="305" y="235" width="50" height="285" rx="24" fill="#ffd7c2" stroke="#1f2937" stroke-width="5"/>
-      <rect x="545" y="235" width="50" height="285" rx="24" fill="#ffd7c2" stroke="#1f2937" stroke-width="5"/>
-
-      <ellipse cx="450" cy="105" rx="32" ry="22" fill="#fca5a5" stroke="#111827" stroke-width="4"/>
-      <text x="450" y="110" text-anchor="middle" font-size="14" font-weight="900" fill="#111827">CÉREBRO</text>
-
-      <ellipse cx="425" cy="285" rx="28" ry="48" fill="#fda4af" stroke="#111827" stroke-width="4"/>
-      <ellipse cx="475" cy="285" rx="28" ry="48" fill="#fda4af" stroke="#111827" stroke-width="4"/>
-      <text x="450" y="285" text-anchor="middle" font-size="13" font-weight="900" fill="#111827">PULMÕES</text>
-
-      <path d="M450 310
-               C428 288, 395 300, 406 326
-               C418 364, 450 380, 450 380
-               C450 380, 482 364, 494 326
-               C505 300, 472 288, 450 310Z"
-            fill="#ef4444" stroke="#111827" stroke-width="4"/>
-      <text x="450" y="342" text-anchor="middle" font-size="13" font-weight="900" fill="#111827">CORAÇÃO</text>
-
-      <rect x="442" y="180" width="16" height="70" rx="8" fill="#93c5fd" stroke="#111827" stroke-width="4"/>
-      <text x="450" y="175" text-anchor="middle" font-size="12" font-weight="900" fill="#111827">TRAQUEIA</text>
-
-      <rect x="462" y="190" width="14" height="95" rx="7" fill="#fde68a" stroke="#111827" stroke-width="4"/>
-      <text x="500" y="220" text-anchor="start" font-size="12" font-weight="900" fill="#111827">ESÔFAGO</text>
-
-      <path d="M485 385
-               C530 370, 560 405, 545 442
-               C526 490, 465 490, 456 446
-               C448 412, 458 394, 485 385Z"
-            fill="#a78bfa" stroke="#111827" stroke-width="4"/>
-      <text x="505" y="440" text-anchor="middle" font-size="13" font-weight="900" fill="#111827">FÍGADO</text>
-
-      <path d="M415 410
-               C415 372, 450 367, 466 388
-               C484 414, 474 460, 438 470
-               C418 476, 402 454, 415 410Z"
-            fill="#fbbf24" stroke="#111827" stroke-width="4"/>
-      <text x="438" y="430" text-anchor="middle" font-size="12" font-weight="900" fill="#111827">ESTÔM.</text>
-
-      <rect x="456" y="460" width="70" height="18" rx="9" fill="#fb7185" stroke="#111827" stroke-width="4"/>
-      <text x="492" y="475" text-anchor="middle" font-size="11" font-weight="900" fill="#111827">PÂNCREAS</text>
-
-      <ellipse cx="420" cy="470" rx="20" ry="32" fill="#60a5fa" stroke="#111827" stroke-width="4"/>
-      <ellipse cx="480" cy="470" rx="20" ry="32" fill="#60a5fa" stroke="#111827" stroke-width="4"/>
-      <text x="450" y="470" text-anchor="middle" font-size="12" font-weight="900" fill="#111827">RINS</text>
-
-      <rect x="400" y="505" width="100" height="25" rx="10" fill="#34d399" stroke="#111827" stroke-width="4"/>
-      <text x="450" y="523" text-anchor="middle" font-size="11" font-weight="900" fill="#111827">INT. DELGADO</text>
-
-      <rect x="392" y="535" width="116" height="24" rx="10" fill="#10b981" stroke="#111827" stroke-width="4"/>
-      <text x="450" y="552" text-anchor="middle" font-size="11" font-weight="900" fill="#111827">INT. GROSSO</text>
-
-      <ellipse cx="450" cy="560" rx="18" ry="16" fill="#93c5fd" stroke="#111827" stroke-width="4"/>
-      <text x="450" y="590" text-anchor="middle" font-size="12" font-weight="900" fill="#111827">BEXIGA</text>
-
-      <rect x="446" y="160" width="8" height="230" rx="4" fill="#fca5a5" stroke="#111827" stroke-width="4"/>
-      <text x="285" y="210" text-anchor="start" font-size="12" font-weight="900" fill="#111827">MEDULA</text>
-    </svg>
-
-    <!-- Overlay interativo -->
-    <svg class="overlaySvg" viewBox="0 0 900 660" id="overlay">
-<defs>
-  <!-- gradiente do reflexo metálico -->
-  <linearGradient id="metalShine" x1="0" y1="0" x2="1" y2="0">
-    <stop offset="0" stop-color="rgba(255,255,255,0)" />
-    <stop offset="0.35" stop-color="rgba(255,255,255,0.18)" />
-    <stop offset="0.5" stop-color="rgba(255,255,255,0.45)" />
-    <stop offset="0.65" stop-color="rgba(255,255,255,0.18)" />
-    <stop offset="1" stop-color="rgba(255,255,255,0)" />
-    <animateTransform
-      attributeName="gradientTransform"
-      type="translate"
-      from="-1 0"
-      to="1 0"
-      dur="2.2s"
-      repeatCount="indefinite"
-    />
-  </linearGradient>
-
-  <!-- recorte arredondado (mesmo formato da bandeja) -->
-  <clipPath id="trayClip">
-    <rect x="720" y="2" width="190" height="120" rx="18" ry="18"></rect>
-  </clipPath>
-<clipPath id="tray2Clip">
-  <rect x="6" y="2" width="220" height="130" rx="18" ry="18"></rect>
-</clipPath>
-
-</defs>
-
-      <!-- BANDEJA (modo BANDEJA) -->
-      <g id="trayGroup">
-  <!-- bandeja (imagem) -->
-  <image
-    id="tray"
-    href="bandeja-medica.png"
-    x="710"
-    y="2"
-    width="190"
-    height="120"
-    preserveAspectRatio="xMidYMid meet"
-  />
-<text
-  x="815"
-  y="118"
-  text-anchor="middle"
-  font-size="12"
-  font-weight="900"
-  fill="rgba(34,197,94,.85)"
-  style="pointer-events:none;"
->
-  BANDEJA CORRETA
-</text>
-
-  <!-- brilho metálico animado -->
-  <rect
-    x="720"
-    y="2"
-    width="190"
-    height="120"
-    clip-path="url(#trayClip)"
-    fill="url(#metalShine)"
-    opacity="0.85"
-    style="mix-blend-mode: screen; pointer-events:none;"
-  />
-</g>
-
-<!-- “aura” de realce da bandeja direita (ligo/desligo via JS) -->
-<rect
-  id="trayGlow"
-  x="720"
-  y="2"
-  width="220"
-  height="130"
-  rx="18"
-  ry="18"
-  fill="none"
-  stroke="rgba(34,197,94,0)"
-  stroke-width="6"
-  opacity="0"
-  style="filter: drop-shadow(0 0 10px rgba(34,197,94,.65)); pointer-events:none;"
-/>
-
-<!-- BANDEJA 2 (SEPARAR / ESTACIONAR) -->
-<g id="tray2Group">
-  <!-- bandeja esquerda (imagem) -->
-  <image
-    id="tray2"
-    href="bandeja-medica.png"
-    x="6"
-    y="2"
-    width="220"
-    height="130"
-    preserveAspectRatio="xMidYMid meet"
-    opacity="0.90"
-  />
-<text
-  x="116"
-  y="118"
-  text-anchor="middle"
-  font-size="12"
-  font-weight="900"
-  fill="rgba(245,158,11,.9)"
-  style="pointer-events:none;"
->
-  SEPARAR / ESTACIONAR
-</text>
-
-  <!-- brilho metálico animado -->
-  <rect
-    x="6"
-    y="2"
-    width="220"
-    height="130"
-    clip-path="url(#tray2Clip)"
-    fill="url(#metalShine)"
-    opacity="0.75"
-    style="mix-blend-mode: screen; pointer-events:none;"
-  />
-
-  <!-- “aura” de realce (ligo/desligo via JS) -->
-  <rect
-    id="tray2Glow"
-    x="6"
-    y="2"
-    width="220"
-    height="130"
-    rx="18"
-    ry="18"
-    fill="none"
-    stroke="rgba(245,158,11,.0)"
-    stroke-width="6"
-    opacity="0"
-    style="filter: drop-shadow(0 0 10px rgba(245,158,11,.65)); pointer-events:none;"
-  />
-</g>
-
-
-
-      <text id="phaseLabel" x="450" y="26" text-anchor="middle" font-size="14" font-weight="900"
-            fill="rgba(8,16,32,.85)">QUIZ</text>
-
-      
-      <!-- PEÇA (gruda na pinça quando carregando) -->
-      <g id="pieceGroup" opacity="0" style="filter: drop-shadow(0 18px 35px rgba(0,0,0,.35));">
-        <rect id="piece" x="-300" y="-300" width="200" height="54" rx="18"
-              fill="rgba(96,165,250,.30)" stroke="rgba(232,238,252,.95)" stroke-width="3"/>
-        <text id="pieceText" x="-200" y="-270" text-anchor="middle"
-              font-size="14" font-weight="900" fill="rgba(232,238,252,.98)">PEÇA</text>
-        <text id="pieceHint" x="-200" y="-252" text-anchor="middle"
-              font-size="10" font-weight="900" fill="rgba(232,238,252,.85)">ARRASTE ATÉ O DESTINO</text>
-      </g>
-
-      <!-- PINÇA (imagem PNG seguindo o cursor/dedo) -->
-      <image id="tweezer"
-             href="pinca-medica.png"
-             x="0" y="0"
-             width="140" height="210"
-             opacity="0"
-             style="pointer-events:none; filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));"
-             />
-    </svg>
-  </section>
-</main>
-
-<!-- LOGIN -->
-<div class="overlayLogin" id="loginOverlay">
-  <div class="modal">
-    <div class="left">
-      <h1>Premium PLUS (Bandeja)</h1>
-      <p>Você escolhe a ação no topo: <b>BANDEJA</b>.</p>
-      <div class="tip">
-        ✅ 1) Responda o quiz.<br>
-        ✅ 2) Faça a ação do modo escolhido.<br>
-        ❌ Só erra se for peça/órgão diferente do correto da rodada.
-      </div>
-    </div>
-    <div class="right">
-      <div>
-        <label>Turma</label>
-        <input id="loginTurma" placeholder="Ex.: 7º ano A / Ciências">
-      </div>
-      <div style="margin-top:10px">
-        <label>Aluno</label>
-        <input id="loginAluno" placeholder="Nome do aluno">
-      </div>
-      <div class="err" id="loginErr">Preencha Turma e Aluno.</div>
-      <div class="row" style="margin-top:12px; justify-content:flex-end">
-        <button class="btn secondary" id="btnDemo">Demo</button>
-        <button class="btn ok" id="btnLogin">Iniciar</button>
+    <div class="footer">
+      <div class="mini">
+        © Ludodidakticos & Falange Educación Lúdica • Operação Final — Corpo Humano<br>
+        
       </div>
     </div>
   </div>
-</div>
 
-
-<!-- CERTIFICADO (modal + impressão) -->
-<div class="certOverlay" id="certModal" style="display:none" aria-hidden="true">
-  <div class="certCard" role="dialog" aria-modal="true" aria-labelledby="certTitle">
-    <div class="certHead">
-      <div>
-        <div class="certKicker">Operação Escolar — Certificado de Participação</div>
-        <h2 id="certTitle" class="certTitle">Certificado de Participação</h2>
-        <div class="certMeta" id="certMeta"></div>
-      </div>
-      <div class="certBadge" aria-hidden="true">FALANGE</div>
-    </div>
-
-    <div class="certGrid">
-      <div class="certBox">
-        <div class="certLabel">Aluno</div>
-        <div class="certValue" id="certAluno">—</div>
-      </div>
-      <div class="certBox">
-        <div class="certLabel">Turma</div>
-        <div class="certValue" id="certTurma">—</div>
-      </div>
-      <div class="certBox">
-        <div class="certLabel">Pontuação</div>
-        <div class="certValue" id="certScore">0</div>
-      </div>
-      <div class="certBox">
-        <div class="certLabel">Tempo (sessão)</div>
-        <div class="certValue" id="certTempo">00:00</div>
-      </div>
-      <div class="certBox">
-        <div class="certLabel">Conclusão</div>
-        <div class="certValue" id="certConcluido">—</div>
-      </div>
-      <div class="certBox">
-        <div class="certLabel">Modo final</div>
-        <div class="certValue" id="certModo">—</div>
-      </div>
-    </div>
-
-    <div class="certResumo" id="certResumo"></div>
-
-    <div class="row certBtns no-print">
-      <button class="btn" id="btnPrintCert">Imprimir / Salvar em PDF</button>
-      <button class="btn secondary" id="btnFecharCert">Fechar</button>
-    </div>
-
-    <div class="certFoot">
-      <small>Gerado automaticamente pelo jogo • Data/hora no fuso do dispositivo</small>
-    </div>
-  </div>
-</div>
-
-<audio id="sndFlip" src="card_flip.mp3" preload="auto"></audio>
 <script>
-(() => {
-  const $ = (s)=>document.querySelector(s);
-
-  // ===== Dados =====
-  const ORGANS = [
-  { id:"cerebro", nome:"Cérebro", sistema:"Nervoso", funcao:"Coordena comandos, pensamentos e respostas do corpo.", cx:450, cy:105, pickR:48, hole:{w:78,h:58,rx:12}, icon:"https://cdn-icons-png.flaticon.com/512/2866/2866236.png", hitbox:{type:"rect",x:380,y:30,w:140,h:140} },
-
-  { id:"pulmoes", nome:"Pulmões", sistema:"Respiratório", funcao:"Realiza trocas gasosas (O2 entra, CO2 sai).", cx:450, cy:285, pickR:90, hole:{w:90,h:110,rx:18}, icon:"https://cdn-icons-png.flaticon.com/512/2491/2491413.png", hitbox:{type:"rect",x:360,y:230,w:180,h:140} },
-
-  { id:"coracao", nome:"Coração", sistema:"Circulatório", funcao:"Bombeia o sangue por todo o corpo.", cx:450, cy:336, pickR:60, hole:{w:74,h:74,rx:37}, icon:"https://cdn-icons-png.flaticon.com/512/833/833472.png", hitbox:{type:"rect",x:410,y:300,w:80,h:90} },
-
-  { id:"traqueia", nome:"Traqueia", sistema:"Respiratório", funcao:"Conduz o ar até os pulmões.", cx:450, cy:210, pickR:55, hole:{w:40,h:90,rx:10}, icon:"https://cdn-icons-png.flaticon.com/512/1055/1055646.png", hitbox:{type:"rect",x:430,y:150,w:40,h:140} },
-
-  { id:"esofago", nome:"Esôfago", sistema:"Digestório", funcao:"Leva o alimento da boca ao estômago.", cx:470, cy:240, pickR:55, hole:{w:44,h:110,rx:10}, icon:"https://cdn-icons-png.flaticon.com/512/2674/2674674.png", hitbox:{type:"rect",x:455,y:180,w:30,h:160} },
-
-  { id:"figado", nome:"Fígado", sistema:"Digestório/Metabólico", funcao:"Produz bile e ajuda na desintoxicação.", cx:505, cy:440, pickR:85, hole:{w:120,h:86,rx:16}, icon:"https://cdn-icons-png.flaticon.com/512/2866/2866367.png", hitbox:{type:"rect",x:445,y:395,w:150,h:110} },
-
-  { id:"estomago", nome:"Estômago", sistema:"Digestório", funcao:"Mistura o alimento e inicia digestão.", cx:438, cy:430, pickR:80, hole:{w:100,h:90,rx:16}, icon:"https://cdn-icons-png.flaticon.com/512/2866/2866344.png", hitbox:{type:"rect",x:380,y:380,w:140,h:120} },
-
-  { id:"pancreas", nome:"Pâncreas", sistema:"Digestório/Endócrino", funcao:"Produz enzimas e hormônios como a insulina.", cx:492, cy:470, pickR:60, hole:{w:110,h:44,rx:14}, icon:"https://cdn-icons-png.flaticon.com/512/2966/2966492.png", hitbox:{type:"rect",x:435,y:455,w:120,h:50} },
-
-  { id:"rins", nome:"Rins", sistema:"Urinário", funcao:"Filtram o sangue e formam urina.", cx:450, cy:470, pickR:90, hole:{w:120,h:90,rx:20}, icon:"https://cdn-icons-png.flaticon.com/512/2966/2966494.png", hitbox:{type:"rect",x:360,y:430,w:180,h:120} },
-
-  { id:"int_del", nome:"Intestino delgado", sistema:"Digestório", funcao:"Absorve nutrientes dos alimentos.", cx:450, cy:515, pickR:80, hole:{w:160,h:54,rx:14}, icon:"https://cdn-icons-png.flaticon.com/512/2966/2966497.png", hitbox:{type:"rect",x:350,y:500,w:200,h:80} },
-
-  { id:"int_gro", nome:"Intestino grosso", sistema:"Digestório", funcao:"Absorve água e forma as fezes.", cx:450, cy:548, pickR:85, hole:{w:180,h:52,rx:14}, icon:"https://cdn-icons-png.flaticon.com/512/2966/2966501.png", hitbox:{type:"rect",x:340,y:535,w:220,h:90} },
-
-  { id:"bexiga", nome:"Bexiga", sistema:"Urinário", funcao:"Armazena urina antes de eliminar.", cx:450, cy:560, pickR:65, hole:{w:72,h:60,rx:18}, icon:"https://cdn-icons-png.flaticon.com/512/2966/2966496.png", hitbox:{type:"rect",x:410,y:540,w:80,h:80} },
-
-  { id:"medula", nome:"Medula espinhal", sistema:"Nervoso", funcao:"Leva impulsos nervosos e participa de reflexos.", cx:450, cy:280, pickR:70, hole:{w:46,h:170,rx:12}, icon:"https://cdn-icons-png.flaticon.com/512/2966/2966500.png", hitbox:{type:"rect",x:430,y:160,w:40,h:260} }
-];
-
-const ORG_IMG = {
-  cerebro:  { elId:"org-cerebro",  src:"cerebro.png" },
-  pulmoes:  { elId:"org-pulmoes",  src:"pulmoes.png" },
-  coracao:  { elId:"org-coracao",  src:"coracao.png" },
-  traqueia: { elId:"org-traqueia", src:"traqueia.png" },
-  esofago:  { elId:"org-esofago",  src:"esofago.png" },
-  figado:   { elId:"org-figado",   src:"figado.png" },
-  estomago: { elId:"org-estomago", src:"estomago.png" },
-  pancreas: { elId:"org-pancreas", src:"pancreas.png" },
-  rins:     { elId:"org-rins",     src:"rins.png" },
-  int_del:  { elId:"org-intestino_delgado",  src:"intestino_delgado.png" },
-  int_gro:  { elId:"org-intestino_grosso",  src:"intestino_grosso.png" },
-  bexiga:   { elId:"org-bexiga",   src:"bexiga.png" },
-  medula:   { elId:"org-medula_espinhal", src:"medula_espinhal.png" } // só se você tiver esse PNG
-};
-// ===== Regras: valor base do órgão (Dinheiro do Órgão) =====
-// (Regras oficiais) :contentReference[oaicite:1]{index=1}
-const ORGAN_BASE = {
-  cerebro: 100,
-  coracao: 90,
-  pulmoes: 80,
-  rins: 70,
-  figado: 60,
-  estomago: 50,
-  intestino_delgado: 40,   // Intestino delgado
-  intestino_grosso: 40,   // Intestino grosso
-  traqueia: 30,
-  esofago: 30,
-  bexiga: 30,
-  medula: 30
-};
-function calcOrganValue(orgId, parkUses){
-  const base = ORGAN_BASE[orgId] ?? 30;
-
-  // punição por uso da bandeja estacionar :contentReference[oaicite:7]{index=7}
-  const penalty = Math.min(parkUses, 3) * 0.10; // 0.10 / 0.20 / 0.30
-  const factor = Math.max(0.50, 1 - penalty);   // mínimo 50%
-
-  return Math.round(base * factor);
-}
-
-// ===== BARALHO COMPLETO (78 cartas) ===== :contentReference[oaicite:3]{index=3}
-const CARD_DECK = {
-  cerebro: [],
-  coracao: [],
-  pulmoes: [],
-  rins: [],
-  figado: [],
-  estomago: [],
-  pancreas: [],
-  int_del: [],
-  int_gro: [],
-  traqueia: [],
-  esofago: [],
-  bexiga: [],
-  medula: []
-};
-function addCard(orgId, tipo, pts, pergunta, opcoes, correta, extra={}){
-  CARD_DECK[orgId].push({ orgId, tipo, pts, pergunta, opcoes, correta, ...extra });
-}
-// ===== CÉREBRO (6 cartas) =====
-
-// Carta 1 — Fácil (10 pts)
-addCard(
-  "cerebro",
-  "Fácil",
-  10,
-  "Qual órgão controla pensamentos, movimentos e sentidos do corpo?",
-  ["Coração", "Pulmões", "Cérebro", "Estômago"],
-  "Cérebro"
-);
-
-// Carta 2 — Fácil (10 pts)
-addCard(
-  "cerebro",
-  "Fácil",
-  10,
-  "Qual órgão faz parte do sistema nervoso e comanda as ações do corpo?",
-  ["Rins", "Cérebro", "Fígado", "Intestinos"],
-  "Cérebro"
-);
-
-// Carta 3 — Média (20 pts)
-addCard(
-  "cerebro",
-  "Média",
-  20,
-  "Qual órgão possui regiões como lobo frontal, parietal, temporal e occipital?",
-  ["Medula espinhal", "Cérebro", "Pulmões", "Coração"],
-  "Cérebro"
-);
-
-// Carta 4 — Média (Doença) (20 pts)
-addCard(
-  "cerebro",
-  "Média (Doença)",
-  20,
-  "O Alzheimer é uma doença que afeta principalmente qual órgão?",
-  ["Pulmões", "Coração", "Cérebro", "Fígado"],
-  "Cérebro"
-);
-
-// Carta 5 — Difícil (30 pts)
-addCard(
-  "cerebro",
-  "Difícil",
-  30,
-  "Qual órgão interpreta informações vindas dos sentidos?",
-  ["Pulmões", "Medula espinhal", "Cérebro", "Coração"],
-  "Cérebro"
-);
-
-// Carta 6 — Silhueta (25 pts)
-addCard(
-  "cerebro",
-  "Silhueta",
-  25,
-  "Silhueta: Qual órgão é representado?",
-  ["Fígado", "Pulmões", "Cérebro", "Intestinos"],
-  "Cérebro",
-  { silhueta: true }
-);
-// ===== CORAÇÃO (6 cartas) =====
-
-// Carta 1 — Fácil (10 pts)
-addCard(
-  "coracao",
-  "Fácil",
-  10,
-  "Qual órgão bombeia o sangue para todo o corpo?",
-  ["Pulmões", "Coração", "Fígado", "Rins"],
-  "Coração"
-);
-
-// Carta 2 — Fácil (10 pts)
-addCard(
-  "coracao",
-  "Fácil",
-  10,
-  "Qual órgão trabalha sem parar, batendo o tempo todo?",
-  ["Cérebro", "Coração", "Estômago", "Intestino"],
-  "Coração"
-);
-
-// Carta 3 — Média (20 pts)
-addCard(
-  "coracao",
-  "Média",
-  20,
-  "Qual órgão possui átrios e ventrículos?",
-  ["Coração", "Pulmões", "Rins", "Fígado"],
-  "Coração"
-);
-
-// Carta 4 — Média (Doença) (20 pts)
-addCard(
-  "coracao",
-  "Média (Doença)",
-  20,
-  "O infarto é um problema que afeta principalmente qual órgão?",
-  ["Pulmões", "Estômago", "Coração", "Bexiga"],
-  "Coração"
-);
-
-// Carta 5 — Difícil (30 pts)
-addCard(
-  "coracao",
-  "Difícil",
-  30,
-  "Qual órgão é responsável pela circulação sistêmica, enviando sangue para o corpo todo?",
-  ["Coração", "Pulmões", "Fígado", "Pâncreas"],
-  "Coração"
-);
-
-// Carta 6 — Silhueta (25 pts)
-addCard(
-  "coracao",
-  "Silhueta",
-  25,
-  "Silhueta: Qual órgão é representado?",
-  ["Cérebro", "Pulmões", "Fígado", "Coração"],
-  "Coração",
-  { silhueta: true }
-);
-
-// ===== PULMÕES (6 cartas) =====
-
-// Carta 1 — Fácil (10 pts)
-addCard(
-  "pulmoes",
-  "Fácil",
-  10,
-  "Qual órgão é responsável pela respiração?",
-  ["Coração", "Pulmões", "Fígado", "Estômago"],
-  "Pulmões"
-);
-
-// Carta 2 — Fácil (10 pts)
-addCard(
-  "pulmoes",
-  "Fácil",
-  10,
-  "Qual órgão ajuda a eliminar o gás carbônico (CO₂) do corpo?",
-  ["Pulmões", "Rins", "Cérebro", "Intestinos"],
-  "Pulmões"
-);
-
-// Carta 3 — Média (20 pts)
-addCard(
-  "pulmoes",
-  "Média",
-  20,
-  "Qual órgão possui estruturas como brônquios e bronquíolos?",
-  ["Coração", "Pulmões", "Estômago", "Bexiga"],
-  "Pulmões"
-);
-
-// Carta 4 — Média (Doença) (20 pts)
-addCard(
-  "pulmoes",
-  "Média (Doença)",
-  20,
-  "A pneumonia é uma doença que afeta principalmente qual órgão?",
-  ["Rins", "Coração", "Fígado", "Pulmões"],
-  "Pulmões"
-);
-
-// Carta 5 — Difícil (30 pts)
-addCard(
-  "pulmoes",
-  "Difícil",
-  30,
-  "Em qual órgão ocorre a troca gasosa (entrada de O₂ e saída de CO₂)?",
-  ["Cérebro", "Estômago", "Pulmões", "Pâncreas"],
-  "Pulmões"
-);
-
-// Carta 6 — Silhueta (25 pts)
-addCard(
-  "pulmoes",
-  "Silhueta",
-  25,
-  "Silhueta: Qual órgão é representado?",
-  ["Coração", "Fígado", "Pulmões", "Cérebro"],
-  "Pulmões",
-  { silhueta: true }
-);
-// ===== RINS (6 cartas) =====
-
-// Carta 1 — Fácil (10 pts)
-addCard(
-  "rins",
-  "Fácil",
-  10,
-  "Qual órgão é responsável por filtrar o sangue?",
-  ["Pulmões", "Rins", "Fígado", "Coração"],
-  "Rins"
-);
-
-// Carta 2 — Fácil (10 pts)
-addCard(
-  "rins",
-  "Fácil",
-  10,
-  "Qual órgão participa da formação da urina?",
-  ["Bexiga", "Estômago", "Intestinos", "Rins"],
-  "Rins"
-);
-
-// Carta 3 — Média (20 pts)
-addCard(
-  "rins",
-  "Média",
-  20,
-  "Qual órgão ajuda a manter o equilíbrio de água e sais minerais no corpo?",
-  ["Rins", "Pulmões", "Cérebro", "Fígado"],
-  "Rins"
-);
-
-// Carta 4 — Média (Doença) (20 pts)
-addCard(
-  "rins",
-  "Média (Doença)",
-  20,
-  "A insuficiência renal afeta principalmente qual órgão?",
-  ["Coração", "Pulmões", "Rins", "Bexiga"],
-  "Rins"
-);
-
-// Carta 5 — Difícil (30 pts)
-addCard(
-  "rins",
-  "Difícil",
-  30,
-  "Qual órgão ajuda a controlar a pressão arterial por meio da filtração do sangue?",
-  ["Rins", "Fígado", "Coração", "Pâncreas"],
-  "Rins"
-);
-
-// Carta 6 — Silhueta (25 pts)
-addCard(
-  "rins",
-  "Silhueta",
-  25,
-  "Silhueta: Qual órgão é representado?",
-  ["Fígado", "Pulmões", "Rins", "Coração"],
-  "Rins",
-  { silhueta: true }
-);
-// ===== FÍGADO (6 cartas) =====
-
-// Carta 1 — Fácil (10 pts)
-addCard(
-  "figado",
-  "Fácil",
-  10,
-  "Qual órgão produz a bile, ajudando na digestão das gorduras?",
-  ["Fígado", "Estômago", "Pâncreas", "Intestino"],
-  "Fígado"
-);
-
-// Carta 2 — Fácil (10 pts)
-addCard(
-  "figado",
-  "Fácil",
-  10,
-  "Qual órgão ajuda a desintoxicar o organismo?",
-  ["Pulmões", "Fígado", "Rins", "Coração"],
-  "Fígado"
-);
-
-// Carta 3 — Média (20 pts)
-addCard(
-  "figado",
-  "Média",
-  20,
-  "Qual órgão armazena glicogênio para fornecer energia ao corpo?",
-  ["Fígado", "Pâncreas", "Rins", "Estômago"],
-  "Fígado"
-);
-
-// Carta 4 — Média (Doença) (20 pts)
-addCard(
-  "figado",
-  "Média (Doença)",
-  20,
-  "A hepatite é uma doença que afeta principalmente qual órgão?",
-  ["Estômago", "Pâncreas", "Fígado", "Intestinos"],
-  "Fígado"
-);
-
-// Carta 5 — Difícil (30 pts)
-addCard(
-  "figado",
-  "Difícil",
-  30,
-  "Qual órgão participa do metabolismo de nutrientes e medicamentos?",
-  ["Pulmões", "Rins", "Coração", "Fígado"],
-  "Fígado"
-);
-
-// Carta 6 — Silhueta (25 pts)
-addCard(
-  "figado",
-  "Silhueta",
-  25,
-  "Silhueta: Qual órgão é representado?",
-  ["Coração", "Pulmões", "Estômago", "Fígado"],
-  "Fígado",
-  { silhueta: true }
-);
-// ===== ESTÔMAGO (6 cartas) =====
-
-// Carta 1 — Fácil (10 pts)
-addCard(
-  "estomago",
-  "Fácil",
-  10,
-  "Qual órgão é responsável por misturar o alimento com os sucos digestivos?",
-  ["Fígado", "Intestino", "Estômago", "Pâncreas"],
-  "Estômago"
-);
-
-// Carta 2 — Fácil (10 pts)
-addCard(
-  "estomago",
-  "Fácil",
-  10,
-  "Qual órgão recebe o alimento logo após o esôfago?",
-  ["Estômago", "Intestino delgado", "Fígado", "Pâncreas"],
-  "Estômago"
-);
-
-// Carta 3 — Média (20 pts)
-addCard(
-  "estomago",
-  "Média",
-  20,
-  "Qual órgão realiza a digestão química dos alimentos?",
-  ["Rins", "Boca", "Intestino grosso", "Estômago"],
-  "Estômago"
-);
-
-// Carta 4 — Média (Doença) (20 pts)
-addCard(
-  "estomago",
-  "Média (Doença)",
-  20,
-  "A gastrite é uma doença que afeta principalmente qual órgão?",
-  ["Intestino", "Fígado", "Estômago", "Pâncreas"],
-  "Estômago"
-);
-
-// Carta 5 — Difícil (30 pts)
-addCard(
-  "estomago",
-  "Difícil",
-  30,
-  "Qual órgão transforma o alimento em quimo antes de enviá-lo ao intestino?",
-  ["Estômago", "Fígado", "Pâncreas", "Intestino delgado"],
-  "Estômago"
-);
-
-// Carta 6 — Silhueta (25 pts)
-addCard(
-  "estomago",
-  "Silhueta",
-  25,
-  "Silhueta: Qual órgão é representado?",
-  ["Fígado", "Estômago", "Pulmões", "Coração"],
-  "Estômago",
-  { silhueta: true }
-);
-// ===== PÂNCREAS (6 cartas) =====
-
-// Carta 1 — Fácil (10 pts)
-addCard(
-  "pancreas",
-  "Fácil",
-  10,
-  "Qual órgão produz a insulina, ajudando a controlar o açúcar no sangue?",
-  ["Fígado", "Pâncreas", "Rins", "Estômago"],
-  "Pâncreas"
-);
-
-// Carta 2 — Fácil (10 pts)
-addCard(
-  "pancreas",
-  "Fácil",
-  10,
-  "Qual órgão produz enzimas que auxiliam na digestão?",
-  ["Estômago", "Pâncreas", "Intestino", "Fígado"],
-  "Pâncreas"
-);
-
-// Carta 3 — Média (20 pts)
-addCard(
-  "pancreas",
-  "Média",
-  20,
-  "Qual órgão tem função digestiva e também endócrina?",
-  ["Pâncreas", "Fígado", "Rins", "Pulmões"],
-  "Pâncreas"
-);
-
-// Carta 4 — Média (Doença) (20 pts)
-addCard(
-  "pancreas",
-  "Média (Doença)",
-  20,
-  "O diabetes está relacionado principalmente a problemas em qual órgão?",
-  ["Fígado", "Rins", "Pâncreas", "Coração"],
-  "Pâncreas"
-);
-
-// Carta 5 — Difícil (30 pts)
-addCard(
-  "pancreas",
-  "Difícil",
-  30,
-  "Qual órgão regula a glicemia por meio da produção de insulina e glucagon?",
-  ["Pulmões", "Fígado", "Coração", "Pâncreas"],
-  "Pâncreas"
-);
-
-// Carta 6 — Silhueta (25 pts)
-addCard(
-  "pancreas",
-  "Silhueta",
-  25,
-  "Silhueta: Qual órgão é representado?",
-  ["Pâncreas", "Fígado", "Estômago", "Rins"],
-  "Pâncreas",
-  { silhueta: true }
-);
-// ===== INTESTINO DELGADO (6 cartas) =====
-
-// Carta 1 — Fácil (10 pts)
-addCard(
-  "int_del",
-  "Fácil",
-  10,
-  "Qual órgão é responsável pela absorção da maior parte dos nutrientes?",
-  ["Intestino grosso", "Estômago", "Fígado", "Intestino delgado"],
-  "Intestino delgado"
-);
-
-// Carta 2 — Fácil (10 pts)
-addCard(
-  "int_del",
-  "Fácil",
-  10,
-  "Qual órgão recebe o alimento logo após o estômago?",
-  ["Fígado", "Intestino grosso", "Intestino delgado", "Pâncreas"],
-  "Intestino delgado"
-);
-
-// Carta 3 — Média (20 pts)
-addCard(
-  "int_del",
-  "Média",
-  20,
-  "Qual órgão possui vilosidades que aumentam a absorção de nutrientes?",
-  ["Intestino grosso", "Estômago", "Intestino delgado", "Rins"],
-  "Intestino delgado"
-);
-
-// Carta 4 — Média (Doença) (20 pts)
-addCard(
-  "int_del",
-  "Média (Doença)",
-  20,
-  "A doença celíaca afeta principalmente qual órgão?",
-  ["Intestino delgado", "Estômago", "Intestino grosso", "Fígado"],
-  "Intestino delgado"
-);
-
-// Carta 5 — Difícil (30 pts)
-addCard(
-  "int_del",
-  "Difícil",
-  30,
-  "Quais são as três partes do intestino delgado?",
-  ["Duodeno, jejuno e íleo", "Ceco, cólon e reto", "Esôfago, estômago e duodeno", "Íleo, reto e ânus"],
-  "Duodeno, jejuno e íleo"
-);
-
-// Carta 6 — Silhueta (25 pts)
-addCard(
-  "int_del",
-  "Silhueta",
-  25,
-  "Silhueta: Qual órgão é representado?",
-  ["Intestino grosso", "Intestino delgado", "Estômago", "Fígado"],
-  "Intestino delgado",
-  { silhueta: true }
-);
-// ===== INTESTINO GROSSO (6 cartas) =====
-
-// Carta 1 — Fácil (10 pts)
-addCard(
-  "int_gro",
-  "Fácil",
-  10,
-  "Qual órgão é responsável pela absorção de água e formação das fezes?",
-  ["Intestino grosso", "Intestino delgado", "Estômago", "Fígado"],
-  "Intestino grosso"
-);
-
-// Carta 2 — Fácil (10 pts)
-addCard(
-  "int_gro",
-  "Fácil",
-  10,
-  "Qual órgão atua após o intestino delgado no processo digestivo?",
-  ["Estômago", "Intestino grosso", "Fígado", "Pâncreas"],
-  "Intestino grosso"
-);
-
-// Carta 3 — Média (20 pts)
-addCard(
-  "int_gro",
-  "Média",
-  20,
-  "Qual órgão abriga grande parte da flora intestinal?",
-  ["Intestino grosso", "Intestino delgado", "Estômago", "Rins"],
-  "Intestino grosso"
-);
-
-// Carta 4 — Média (Doença) (20 pts)
-addCard(
-  "int_gro",
-  "Média (Doença)",
-  20,
-  "A constipação intestinal está relacionada principalmente a qual órgão?",
-  ["Rins", "Estômago", "Fígado", "Intestino grosso"],
-  "Intestino grosso"
-);
-
-// Carta 5 — Difícil (30 pts)
-addCard(
-  "int_gro",
-  "Difícil",
-  30,
-  "Qual parte do sistema digestório inclui o cólon?",
-  ["Intestino delgado", "Intestino grosso", "Estômago", "Esôfago"],
-  "Intestino grosso"
-);
-
-// Carta 6 — Silhueta (25 pts)
-addCard(
-  "int_gro",
-  "Silhueta",
-  25,
-  "Silhueta: Qual órgão é representado?",
-  ["Estômago", "Intestino delgado", "Intestino grosso", "Fígado"],
-  "Intestino grosso",
-  { silhueta: true }
-);
-// ===== TRAQUEIA (6 cartas) =====
-
-// Carta 1 — Fácil (10 pts)
-addCard(
-  "traqueia",
-  "Fácil",
-  10,
-  "Qual estrutura conduz o ar até os pulmões?",
-  ["Traqueia", "Esôfago", "Coração", "Intestino"],
-  "Traqueia"
-);
-
-// Carta 2 — Fácil (10 pts)
-addCard(
-  "traqueia",
-  "Fácil",
-  10,
-  "Qual estrutura faz parte do sistema respiratório e leva o ar para os brônquios?",
-  ["Fígado", "Esôfago", "Traqueia", "Bexiga"],
-  "Traqueia"
-);
-
-// Carta 3 — Média (20 pts)
-addCard(
-  "traqueia",
-  "Média",
-  20,
-  "Qual estrutura possui anéis cartilaginosos que a mantêm aberta?",
-  ["Intestino grosso", "Esôfago", "Traqueia", "Estômago"],
-  "Traqueia"
-);
-
-// Carta 4 — Média (Doença) (20 pts)
-addCard(
-  "traqueia",
-  "Média (Doença)",
-  20,
-  "A traqueíte é uma inflamação que afeta principalmente qual estrutura?",
-  ["Rins", "Pulmões", "Coração", "Traqueia"],
-  "Traqueia"
-);
-
-// Carta 5 — Difícil (30 pts)
-addCard(
-  "traqueia",
-  "Difícil",
-  30,
-  "Qual estrutura liga a laringe aos brônquios no sistema respiratório?",
-  ["Traqueia", "Esôfago", "Faringe", "Diafragma"],
-  "Traqueia"
-);
-
-// Carta 6 — Silhueta (25 pts)
-addCard(
-  "traqueia",
-  "Silhueta",
-  25,
-  "Silhueta: Qual estrutura é representada?",
-  ["Esôfago", "Traqueia", "Pulmões", "Coração"],
-  "Traqueia",
-  { silhueta: true }
-);
-// ===== ESÔFAGO (6 cartas) =====
-
-// Carta 1 — Fácil (10 pts)
-addCard(
-  "esofago",
-  "Fácil",
-  10,
-  "Qual estrutura transporta o alimento da boca até o estômago?",
-  ["Traqueia", "Esôfago", "Intestino", "Fígado"],
-  "Esôfago"
-);
-
-// Carta 2 — Fácil (10 pts)
-addCard(
-  "esofago",
-  "Fácil",
-  10,
-  "Qual estrutura realiza movimentos peristálticos para empurrar o alimento?",
-  ["Traqueia", "Estômago", "Intestino", "Esôfago"],
-  "Esôfago"
-);
-
-// Carta 3 — Média (20 pts)
-addCard(
-  "esofago",
-  "Média",
-  20,
-  "Qual estrutura faz parte do sistema digestório, mas não participa da digestão química?",
-  ["Esôfago", "Estômago", "Intestino delgado", "Pâncreas"],
-  "Esôfago"
-);
-
-// Carta 4 — Média (Doença) (20 pts)
-addCard(
-  "esofago",
-  "Média (Doença)",
-  20,
-  "O refluxo gastroesofágico afeta principalmente qual estrutura?",
-  ["Traqueia", "Estômago", "Intestino", "Esôfago"],
-  "Esôfago"
-);
-
-// Carta 5 — Difícil (30 pts)
-addCard(
-  "esofago",
-  "Difícil",
-  30,
-  "Qual estrutura liga a faringe ao estômago no sistema digestório?",
-  ["Esôfago", "Traqueia", "Intestino grosso", "Diafragma"],
-  "Esôfago"
-);
-
-// Carta 6 — Silhueta (25 pts)
-addCard(
-  "esofago",
-  "Silhueta",
-  25,
-  "Silhueta: Qual estrutura é representada?",
-  ["Estômago", "Traqueia", "Esôfago", "Pulmões"],
-  "Esôfago",
-  { silhueta: true }
-);
-// ===== BEXIGA (6 cartas) =====
-
-// Carta 1 — Fácil (10 pts)
-addCard(
-  "bexiga",
-  "Fácil",
-  10,
-  "Qual órgão armazena a urina antes de ser eliminada?",
-  ["Estômago", "Rins", "Intestino", "Bexiga"],
-  "Bexiga"
-);
-
-// Carta 2 — Fácil (10 pts)
-addCard(
-  "bexiga",
-  "Fácil",
-  10,
-  "Qual órgão faz parte do sistema urinário?",
-  ["Bexiga", "Pulmões", "Fígado", "Coração"],
-  "Bexiga"
-);
-
-// Carta 3 — Média (20 pts)
-addCard(
-  "bexiga",
-  "Média",
-  20,
-  "Qual órgão é capaz de se distender para armazenar urina?",
-  ["Bexiga", "Rins", "Estômago", "Intestino"],
-  "Bexiga"
-);
-
-// Carta 4 — Média (Doença) (20 pts)
-addCard(
-  "bexiga",
-  "Média (Doença)",
-  20,
-  "A cistite é uma inflamação que afeta principalmente qual órgão?",
-  ["Fígado", "Rins", "Bexiga", "Intestino"],
-  "Bexiga"
-);
-
-// Carta 5 — Difícil (30 pts)
-addCard(
-  "bexiga",
-  "Difícil",
-  30,
-  "Qual órgão possui esfíncteres que controlam a saída da urina?",
-  ["Estômago", "Rins", "Intestino grosso", "Bexiga"],
-  "Bexiga"
-);
-
-// Carta 6 — Silhueta (25 pts)
-addCard(
-  "bexiga",
-  "Silhueta",
-  25,
-  "Silhueta: Qual órgão é representado?",
-  ["Bexiga", "Rins", "Estômago", "Intestino"],
-  "Bexiga",
-  { silhueta: true }
-);
-// ===== MEDULA ESPINHAL (6 cartas) =====
-
-// Carta 1 — Fácil (10 pts)
-addCard(
-  "medula",
-  "Fácil",
-  10,
-  "Qual estrutura faz a comunicação entre o cérebro e o restante do corpo?",
-  ["Pulmões", "Cérebro", "Medula espinhal", "Coração"],
-  "Medula espinhal"
-);
-
-// Carta 2 — Fácil (10 pts)
-addCard(
-  "medula",
-  "Fácil",
-  10,
-  "Qual estrutura fica protegida pela coluna vertebral?",
-  ["Esôfago", "Traqueia", "Medula espinhal", "Intestino"],
-  "Medula espinhal"
-);
-
-// Carta 3 — Média (20 pts)
-addCard(
-  "medula",
-  "Média",
-  20,
-  "Qual estrutura é responsável pela condução dos impulsos nervosos?",
-  ["Coração", "Medula espinhal", "Pulmões", "Rins"],
-  "Medula espinhal"
-);
-
-// Carta 4 — Média (Doença) (20 pts)
-addCard(
-  "medula",
-  "Média (Doença)",
-  20,
-  "Uma lesão medular afeta principalmente qual estrutura?",
-  ["Fígado", "Cérebro", "Pulmões", "Medula espinhal"],
-  "Medula espinhal"
-);
-
-// Carta 5 — Difícil (30 pts)
-addCard(
-  "medula",
-  "Difícil",
-  30,
-  "Qual estrutura participa dos reflexos rápidos sem passar diretamente pelo cérebro?",
-  ["Cérebro", "Medula espinhal", "Coração", "Pulmões"],
-  "Medula espinhal"
-);
-
-// Carta 6 — Silhueta (25 pts)
-addCard(
-  "medula",
-  "Silhueta",
-  25,
-  "Silhueta: Qual estrutura é representada?",
-  ["Esôfago", "Cérebro", "Traqueia", "Medula espinhal"],
-  "Medula espinhal",
-  { silhueta: true }
-);
-
-
-  // BANDEJA em coords SVG
-  const TRAY = {x:740, y:20, w:140, h:70};
-// BANDEJA 2 (separar/estacionar)
-const TRAY2 = {x:20, y:20, w:160, h:70};
-
-
-  // ===== UI =====
-  const scoreEl=$("#score"), triesEl=$("#tries"), roundsEl=$("#rounds"), phaseEl=$("#phase");
-  const qHitsEl=$("#qHits"), qMissEl=$("#qMiss"), deliverHitsEl=$("#deliverHits"), deliverMissEl=$("#deliverMiss");
-  const qtitle=$("#qtitle"), qsub=$("#qsub"), options=$("#options"), qtip=$("#qtip");
-  const statusEl=$("#status");
-  const btnModoAcao=$("#btnModoAcao"), btnModoPergunta=$("#btnModoPergunta"), btnModoQuiz=$("#btnModoQuiz"), btnSom=$("#btnSom"), btnTempo=$("#btnTempo"), btnNova=$("#btnNova");
-  const btnReset=$("#btnReset"), btnEncerrar=$("#btnEncerrar");
-  const sndFlip = document.getElementById("sndFlip");
-
-  const stage=$("#stage");
-  const overlay=$("#overlay");
-  const phaseLabel=$("#phaseLabel");
-  // ===== Timer (opcional) + Certificado =====
-  const timeLeftEl = $("#timeLeft");
-  const certModal = $("#certModal");
-  const certMeta = $("#certMeta");
-  const certAluno = $("#certAluno");
-  const certTurma = $("#certTurma");
-  const certScore = $("#certScore");
-  const certTempo = $("#certTempo");
-  const certConcluido = $("#certConcluido");
-  const certModo = $("#certModo");
-  const certResumo = $("#certResumo");
-  const btnPrintCert = $("#btnPrintCert");
-  const btnFecharCert = $("#btnFecharCert");
-
-  let timerMinutes = null;      // null = OFF
-  let sessionStarted = false;
-  let sessionStartTs = 0;
-  let timerEndTs = 0;
-  let timerTick = null;
-
-  function fmtMMSS(ms){
-    const s = Math.max(0, Math.floor(ms/1000));
-    const mm = String(Math.floor(s/60)).padStart(2,"0");
-    const ss = String(s%60).padStart(2,"0");
-    return `${mm}:${ss}`;
-  }
-  function nowPtBR(){
-    // usa o fuso do dispositivo (browser)
-    return new Date().toLocaleString("pt-BR");
-  }
-  function updateTempoBtn(){
-    btnTempo.textContent = (timerMinutes && timerMinutes>0) ? `Tempo: ${timerMinutes} min` : "Tempo: OFF";
-  }
-  function stopTimer(){
-    if(timerTick){ clearInterval(timerTick); timerTick=null; }
-    timerEndTs = 0;
-    if(timeLeftEl) timeLeftEl.textContent = "--:--";
-  }
-  function startTimerIfNeeded(){
-    if(!timerMinutes || timerMinutes<=0) return;
-    timerEndTs = sessionStartTs + (timerMinutes*60*1000);
-    if(timerTick) clearInterval(timerTick);
-    timerTick = setInterval(()=>{
-      const left = timerEndTs - Date.now();
-      if(timeLeftEl) timeLeftEl.textContent = fmtMMSS(left);
-      if(left <= 0){
-        stopTimer();
-        // encerra automaticamente
-        tries = 0;
-        showCertificate("Tempo esgotado");
-      }
-    }, 250);
-  }
-  function ensureSessionStarted(){
-    if(sessionStarted) return;
-    sessionStarted = true;
-    sessionStartTs = Date.now();
-    stopTimer();
-    startTimerIfNeeded();
+  function limparBotoes(){
+    document.querySelectorAll('.ctaRow .btn')
+      .forEach(btn => btn.classList.remove('active'));
   }
 
-  function showCertificate(motivo="Concluído"){
-    // evita abrir duas vezes
-    if(certModal && certModal.style.display === "flex") return;
-
-    // garante sessão (caso alguém clique encerrar sem começar)
-    if(!sessionStarted){ sessionStarted=true; sessionStartTs=Date.now(); }
-
-    stopTimer();
-    updateHUD?.();
-
-    const elapsed = Date.now() - sessionStartTs;
-    const tempoStr = fmtMMSS(elapsed);
-
-    // campos
-    certAluno.textContent = (loginAluno?.value || "—").trim() || "—";
-    certTurma.textContent = (loginTurma?.value || "—").trim() || "—";
-    certScore.textContent = String(score);
-    certTempo.textContent = tempoStr;
-    certConcluido.textContent = nowPtBR();
-    certModo.textContent = (questionMode==="quiz") ? "QUIZ" : "CARTAS";
-
-    certMeta.textContent = `Motivo: ${motivo}`;
-    certResumo.textContent =
-`Resumo:
-• Pontos: ${score}
-• Quiz: ${qHits} acertos / ${qMiss} erros
-• Entregas: ${deliverHits} certas / ${deliverMiss} erradas
-• Rodadas: ${rounds}
-• Vidas restantes: ${tries}`;
-
-    if(certModal){
-      certModal.style.display="flex";
-      certModal.setAttribute("aria-hidden","false");
-    }
-    setStatus?.("Sessão encerrada. Certificado gerado.", "warn");
+  function esconderCapa(){
+    document.getElementById("pagina-capa").style.display = "none";
   }
 
-
-
-  const trayGroup=$("#trayGroup");
-  
-const trayHold = document.getElementById("trayHold");
-const tray2Hold = document.getElementById("tray2Hold");
-function showInTray(holderEl, orgId){
-  const ref = ORG_IMG[orgId];
-  if(!ref) return;
-  holderEl.innerHTML = `<img src="${ref.src}" alt="">`;
-  holderEl.style.display = "grid";
-}
-
-function clearTrays(){
-  trayHold.style.display = "none";
-  trayHold.innerHTML = "";
-  tray2Hold.style.display = "none";
-  tray2Hold.innerHTML = "";
-}
-  
-
-  const pieceGroup=$("#pieceGroup");
-  const piece=$("#piece");
-  const pieceText=$("#pieceText");
-  const pieceHint=$("#pieceHint");
-  const tweezer=$("#tweezer");
-
-  const loginOverlay=$("#loginOverlay");
-  const loginTurma=$("#loginTurma"), loginAluno=$("#loginAluno");
-  const loginErr=$("#loginErr");
-  const btnLogin=$("#btnLogin"), btnDemo=$("#btnDemo");
-
-  const nose=$("#nose-lamp");
-  const flash=$("#flash-red");
-const flashGreen = $("#flash-green");
-
-
-  // ===== Estado =====
-  let logged=false;
-  let soundOn=true;
-let questionMode = "quiz"; // "quiz" | "cards"
-
-  let score=0, tries=3, rounds=0;
-  let qHits=0, qMiss=0, deliverHits=0, deliverMiss=0;
-let parkUses = 0; // quantas vezes usou a bandeja SEPARAR nesta rodada
-
-let activeCard = null;     // guarda a carta da rodada (modo CARTAS)
-let activeCardPts = 0;     // valor da carta (10/20/30/25)
-let activeCardOrgId = "";  // órgão da carta (ex.: "cerebro")
-let cardRevealed = false;
-
-  // phases: "quiz" -> "pick"/"choose" -> "carry"
-  let phase="quiz";
-  let current=null;
-
-  let quizLocked=false;
-  let selectedPick=null;     // no modo BANDEJA, é o órgão clicado no corpo; 
-  let carrying=false;
-let parkedIds = new Set(); // órgãos “tirados do caminho”
-
-
-  // pinça/cursor
-  // pinça/cursor
-let pointerDown = false;
-let lastP = { x: 450, y: 330 };
-let lastPointerType = "mouse"; // 👈 NOVO
-
-
-  // modos
-  let quizMode=0; // 0 misturado 1 nome 2 sistema 3 funcao
-  const QUIZ_LABEL=["Misturado","Nome","Sistema","Função"];
-  let actionMode="tray"; // "tray" | "fit"
-
-  // ===== Util =====
-  function setStatus(msg,type=""){
-    statusEl.textContent=msg;
-    statusEl.style.borderColor =
-      type==="ok" ? "rgba(34,197,94,.65)" :
-      type==="bad" ? "rgba(239,68,68,.65)" :
-      type==="warn"? "rgba(245,158,11,.65)" :
-      "rgba(255,255,255,.14)";
-  }
-  function updateHUD(){
-    scoreEl.textContent=score;
-    triesEl.textContent=tries;
-    roundsEl.textContent=rounds;
-    phaseEl.textContent=phase.toUpperCase();
-    phaseLabel.textContent=phase.toUpperCase();
-    qHitsEl.textContent=qHits;
-    qMissEl.textContent=qMiss;
-    deliverHitsEl.textContent=deliverHits;
-    deliverMissEl.textContent=deliverMiss;
-
-    btnModoAcao.textContent = `Ação: ${actionMode==="tray" ? "BANDEJA" : "ENCAIXE"}`;
-// ===== Modo de pergunta: QUIZ x CARTAS =====
-btnModoPergunta.textContent = `Modo: ${questionMode==="quiz" ? "QUIZ" : "CARTAS"}`;
-
-// quando estiver em CARTAS, esconder o seletor "Quiz: Misturado"
-btnModoQuiz.style.display = (questionMode==="quiz") ? "inline-block" : "none";
-
-
-    // visuais por modo
-    trayGroup.style.display = (actionMode==="tray") ? "block" : "none";
-    
-  }
-function hideBodyOrgan(orgId){
-  const ref = ORG_IMG[orgId];
-  if(!ref) return;
-  const el = document.getElementById(ref.elId);
-  if(el) el.style.visibility = "hidden";
-}
-
-function showBodyOrgan(orgId){
-  const ref = ORG_IMG[orgId];
-  if(!ref) return;
-  const el = document.getElementById(ref.elId);
-  if(el) el.style.visibility = "visible";
-}
-function resetRoundVisual(){
-  // 1) limpa as bandejas (direita e esquerda)
-  clearTrays();
-
-  // 2) devolve TODOS os órgãos pro corpo
-  Object.keys(ORG_IMG).forEach(id => showBodyOrgan(id));
-
-  // 3) zera lista de “estacionados”
-  parkedIds.clear();
-}
-
-  function buzzFX(){
-    // efeito tipo Operation clássico
-    nose.classList.add("nose-buzz");
-    stage.classList.add("shake");
-    flash.style.display="block";
-    setTimeout(()=>{
-      nose.classList.remove("nose-buzz");
-      stage.classList.remove("shake");
-      flash.style.display="none";
-    }, 300);
+  function mostrarCapa(){
+    document.getElementById("pagina-capa").style.display = "block";
   }
 
-  // som simples
-  function beep(freq=880, dur=120, type="sine", gain=0.05){
-    if(!soundOn) return;
-    try{
-      const ctx=new (window.AudioContext||window.webkitAudioContext)();
-      const o=ctx.createOscillator();
-      const g=ctx.createGain();
-      o.type=type; o.frequency.value=freq;
-      g.gain.value=gain;
-      o.connect(g); g.connect(ctx.destination);
-      o.start();
-      setTimeout(()=>{ o.stop(); ctx.close(); }, dur);
-    }catch(e){}
-  }
-  function buzzSound(){
-    if(!soundOn) return;
-    try{
-      const ctx=new (window.AudioContext||window.webkitAudioContext)();
-      const o=ctx.createOscillator();
-      const g=ctx.createGain();
-      o.type="sawtooth"; o.frequency.value=120;
-      g.gain.value=0.18;
-      o.connect(g); g.connect(ctx.destination);
-      o.start();
-      o.stop(ctx.currentTime + 0.28);
-      setTimeout(()=>{ ctx.close(); }, 330);
-    }catch(e){}
-  }
-function clinkMetal(kind="ok"){
-  if(!soundOn) return;
+  function abrirKit(){
+    limparBotoes();
+    esconderCapa();
 
-  // "clink" curtinho e metálico (mistura 2 osciladores + ruído)
-  try{
-    const ctx = new (window.AudioContext||window.webkitAudioContext)();
-    const t0 = ctx.currentTime;
+    document.getElementById("secao-kit").style.display = "block";
+    document.getElementById("secao-40min").style.display = "none";
 
-    const g = ctx.createGain();
-    g.gain.value = 0.0001;
-    g.connect(ctx.destination);
-
-    // dois tons metálicos
-    const o1 = ctx.createOscillator();
-    const o2 = ctx.createOscillator();
-    o1.type="triangle";
-    o2.type="sine";
-
-    // pequenas variações: bandeja correta ("ok") mais brilhante; separar ("park") mais suave
-    const base = (kind==="ok") ? 1480 : 980;
-
-    o1.frequency.setValueAtTime(base, t0);
-    o2.frequency.setValueAtTime(base*1.33, t0);
-
-    // envelope rápido
-    g.gain.setValueAtTime(0.0001, t0);
-    g.gain.exponentialRampToValueAtTime(kind==="ok" ? 0.12 : 0.07, t0+0.01);
-    g.gain.exponentialRampToValueAtTime(0.0001, t0+0.12);
-
-    o1.connect(g); o2.connect(g);
-    o1.start(t0); o2.start(t0);
-    o1.stop(t0+0.14); o2.stop(t0+0.14);
-
-    // ruído curto (som de metal)
-    const buf = ctx.createBuffer(1, ctx.sampleRate*0.12, ctx.sampleRate);
-    const data = buf.getChannelData(0);
-    for(let i=0;i<data.length;i++) data[i] = (Math.random()*2-1) * 0.25;
-    const n = ctx.createBufferSource();
-    n.buffer = buf;
-    const ng = ctx.createGain();
-    ng.gain.setValueAtTime(0.0001, t0);
-    ng.gain.exponentialRampToValueAtTime(kind==="ok" ? 0.05 : 0.03, t0+0.01);
-    ng.gain.exponentialRampToValueAtTime(0.0001, t0+0.10);
-    n.connect(ng); ng.connect(ctx.destination);
-    n.start(t0); n.stop(t0+0.12);
-
-    setTimeout(()=>ctx.close(), 220);
-  }catch(e){}
-}
-
-function microVibrate(){
-  // vibração curtinha (celular). Em PC ignora.
-  try{
-    if(navigator.vibrate) navigator.vibrate([18, 10, 18]);
-  }catch(e){}
-}
-
-function flashOk(){
-  if(!flashGreen) return;
-  flashGreen.style.display="block";
-  setTimeout(()=>{ flashGreen.style.display="none"; }, 140);
-}
-
-function trayBounce(which="tray"){
-  // dá o “pulinho” no grupo da bandeja dentro do SVG
-  const el = document.getElementById(which==="tray" ? "trayGroup" : "tray2Group");
-  if(!el) return;
-  el.classList.remove("tray-bounce"); // reinicia animação
-  void el.getBBox(); // força reflow no SVG
-  el.classList.add("tray-bounce");
-  setTimeout(()=>el.classList.remove("tray-bounce"), 180);
-}
-
-function successFX(kind="ok"){
-  // kind: "ok" (bandeja correta) | "park" (bandeja separar)
-  clinkMetal(kind);
-  microVibrate();
-  if(kind==="ok") flashOk();
-
-  trayBounce(kind==="ok" ? "tray" : "tray2");
-}
-
-  function randInt(n){ return Math.floor(Math.random()*n); }
-  function sample(arr, k){
-    const copy=arr.slice(); const out=[];
-    while(out.length<k && copy.length){
-      out.push(copy.splice(randInt(copy.length),1)[0]);
-    }
-    return out;
-  }
-  function shuffle(arr){
-    for(let i=arr.length-1;i>0;i--){
-      const j=Math.floor(Math.random()*(i+1));
-      [arr[i],arr[j]]=[arr[j],arr[i]];
-    }
-    return arr;
+    document.querySelector('.ctaRow .btn.secondary').classList.add('active');
+    window.scrollTo(0,0);
   }
 
-  function pickOrgan(){
-    current = ORGANS[randInt(ORGANS.length)];
+  function abrir40min(){
+    limparBotoes();
+    esconderCapa();
+
+    document.getElementById("secao-40min").style.display = "block";
+    document.getElementById("secao-kit").style.display = "none";
+
+    document.querySelector('.ctaRow .btn:not(.secondary)').classList.add('active');
+    window.scrollTo(0,0);
+  }
+  function abrirCompra(){
+    limparBotoes();
+    esconderCapa();
+
+    document.getElementById("secao-kit").style.display = "none";
+    document.getElementById("secao-40min").style.display = "none";
+    document.getElementById("secao-compra").style.display = "block";
+
+    // destaca o botão comprar
+    document.querySelector('.ctaRow .btn.comprar').classList.add('active');
+
+    window.scrollTo(0,0);
   }
 
-  
+  function voltarCapa(){
+    limparBotoes();
 
-  
-  // ===== Perguntas =====
-  
-function buildQuestion(){
-// esconder cabeçalho no modo QUIZ
-document.querySelector(".cardHeader").style.display = "none";
-document.querySelectorAll(".silhuetaBox").forEach(el=>el.classList.add("hidden"));
+    document.getElementById("secao-kit").style.display = "none";
+document.getElementById("secao-40min").style.display = "none";
+document.getElementById("secao-compra").style.display = "none";
 
-
-const silBox = document.getElementById("silhuetaBox");
-const silImg = document.getElementById("silhuetaImg");
-const silFallback = document.getElementById("silhuetaFallback");
-
-if(silBox) silBox.classList.add("hidden");
-if(silImg){
-  silImg.src = "";
-  silImg.style.display = "none";
-}
-if(silFallback) silFallback.style.display = "none";
-
-    quizLocked=false;
-    options.innerHTML="";
-    options.classList.remove("lock");
-    qtip.textContent="";
-
-    let qType;
-    if(quizMode===0) qType = ["nome","sistema","funcao"][randInt(3)];
-    if(quizMode===1) qType = "nome";
-    if(quizMode===2) qType = "sistema";
-    if(quizMode===3) qType = "funcao";
-
-    let prompt="", sub="", correctText="";
-
-    if(qType==="nome"){
-      prompt = `Qual é o órgão: ${current.nome.toUpperCase()}?`;
-      sub = `Escolha a alternativa correta.`;
-      correctText = current.nome;
-      const distract = sample(ORGANS.filter(o=>o.id!==current.id), 3).map(o=>o.nome);
-      renderOptions(shuffle([correctText, ...distract]), correctText);
-    }
-    if(qType==="sistema"){
-      prompt = `Qual órgão pertence ao sistema: ${current.sistema.toUpperCase()}?`;
-      sub = `Escolha UM órgão correto desse sistema.`;
-      correctText = current.nome;
-      const distract = sample(ORGANS.filter(o=>o.id!==current.id && o.sistema!==current.sistema), 3).map(o=>o.nome);
-      renderOptions(shuffle([correctText, ...distract]), correctText);
-    }
-    if(qType==="funcao"){
-      prompt = `Qual órgão tem a função abaixo?`;
-      sub = `“${current.funcao}”`;
-      correctText = current.nome;
-      const distract = sample(ORGANS.filter(o=>o.id!==current.id), 3).map(o=>o.nome);
-      renderOptions(shuffle([correctText, ...distract]), correctText);
-    }
-
-    qtitle.textContent = prompt;
-    qsub.textContent = sub;
-
-    if(actionMode==="tray"){
-      qtip.textContent = "Ao acertar, clique em um órgão para PEGAR e leve até a BANDEJA.";
-    }
+    mostrarCapa();
+    window.scrollTo(0,0);
   }
-function pickCard(){
-  // junta todas as cartas de todos os órgãos
-  const allCards = Object.values(CARD_DECK).flat();
-
-  // segurança: se não houver cartas
-  if(allCards.length === 0) return null;
-
-  return allCards[Math.floor(Math.random() * allCards.length)];
-}
-
-
-function buildCard(){
-cardRevealed = false;
-
-const cover = document.getElementById("deckCover");
-const btnReveal = document.getElementById("btnRevelarCarta");
-
-cover.classList.remove("hidden");
-cover.classList.remove("flipOut");
-
-
-// esconde pergunta/opções até revelar
-qtitle.style.display = "none";
-qsub.style.display = "none";
-options.style.display = "none";
-qtip.style.display = "none";
-
-// botão revela
-btnReveal.onclick = ()=>{
-  cardRevealed = true;
-
-  
-
-    // 🔊 som de flip (se Som estiver ON)
-    try{
-      if(soundOn && sndFlip){
-        sndFlip.currentTime = 0;
-        sndFlip.volume = 0.8;
-        sndFlip.play().catch(()=>{});
-      }
-    }catch(e){}
-// anima a capa saindo
-  cover.classList.add("flipOut");
-
-  // depois do flip, esconde e revela o conteúdo
-  setTimeout(()=>{
-    cover.classList.add("hidden");
-    cover.classList.remove("flipOut");
-
-    qtitle.style.display = "";
-    qsub.style.display = "";
-    options.style.display = "";
-    qtip.style.display = "";
-
-    // anima o conteúdo entrando
-    const cardBox = document.getElementById("cardBox");
-    cardBox.classList.remove("cardRevealIn");
-    void cardBox.offsetWidth; // reset
-    cardBox.classList.add("cardRevealIn");
-
-  }, 280);
-};
-
-
-  quizLocked = false;
-  options.innerHTML = "";
-  options.classList.remove("lock");
-  qtip.textContent = "";
-
-  const card = pickCard();
-activeCard = card;
-activeCardPts = card.pts;
-activeCardOrgId = card.orgId;
-current = ORGANS.find(o => o.id === activeCardOrgId);
-// mostrar cabeçalho no modo CARTAS
-document.querySelector(".cardHeader").style.display = "flex";
-document.getElementById("cardType").textContent = `CARTA ${card.tipo.toUpperCase()}`;
-document.getElementById("cardPts").textContent = `${card.pts} pts`;
-
-const silBox = document.getElementById("silhuetaBox");
-const silImg = document.getElementById("silhuetaImg");
-const silFallback = document.getElementById("silhuetaFallback");
-
-if(card.silhueta){
-  silBox.classList.remove("hidden");
-
-  silImg.style.display = "block";
-  silFallback.style.display = "none";
-
-  silImg.src = `sil_${card.orgId}.png`;
-
-  silImg.onerror = ()=>{
-    silImg.style.display = "none";
-    silFallback.style.display = "block";
-  };
-}else{
-  silBox.classList.add("hidden");
-  silImg.src = "";
-  silImg.style.display = "none";
-  silFallback.style.display = "none";
-}
-
-
-// ===== aplicar raridade visual pela dificuldade =====
-const box = document.getElementById("cardBox");
-box.classList.remove("card-easy","card-medium","card-hard","card-silhouette");
-
-const tipo = (card.tipo || "").toLowerCase();
-if(tipo.includes("fácil")) box.classList.add("card-easy");
-else if(tipo.includes("média")) box.classList.add("card-medium");
-else if(tipo.includes("difícil")) box.classList.add("card-hard");
-else if(tipo.includes("silhueta")) box.classList.add("card-silhouette");
-
-
-  // garante que "current" (órgão-alvo) fique correto para a fase da pinça
-  current = ORGANS.find(o => o.id === card.orgId) || ORGANS[0];
-
-  qtitle.textContent = `🃏 CARTA ${card.tipo.toUpperCase()} — ${card.pts} pts`;
-  qsub.textContent = card.pergunta;
-
-  qtip.textContent = "Ao acertar, você ganha os pontos da carta e pode puxar o órgão.";
-
-  renderCardOptions(card.opcoes, card.correta, card.pts);
-}
-
-function renderCardOptions(list, correct, pts){
-  list.forEach(text=>{
-    const btn = document.createElement("button");
-    btn.className = "opt";
-    btn.textContent = text;
-
-    btn.addEventListener("click", ()=>{
-if(!cardRevealed) return; // 🔒 não deixa responder com deck fechado
-      if(quizLocked || tries<=0) return;
-      quizLocked = true;
-      options.classList.add("lock");
-
-      const ok = (text === correct);
-
-      if(ok){
-        // ✅ no modo cartas, soma os pontos da carta (dinheiro da pergunta) :contentReference[oaicite:3]{index=3}
-        score += pts;
-        qHits++;
-
-        btn.classList.add("correct");
-
-        // libera a mesma fase de puxar órgão do quiz
-        phase = "pick";
-        setStatus(`✅ Carta correta! +${pts} pts. Agora: puxe o órgão e leve à bandeja.`, "ok");
-
-        selectedPick = null;
-        carrying = false;
-        hidePiece();
-        showTweezer(true);
-        updateHUD();
-      }else{
-        // ❌ no modo cartas, neste passo vamos só “errar e passar” (sem tirar vida)
-        // (A regra de perder turno no combate a gente implementa depois.) :contentReference[oaicite:4]{index=4}
-        qMiss++;
-        btn.classList.add("wrong");
-        qtip.textContent = `Resposta correta: ${correct.toUpperCase()}`;
-        setStatus("❌ Carta errada. Próxima rodada.", "bad");
-        updateHUD();
-
-        setTimeout(()=>nextRound(), 650);
-      }
-    });
-
-    options.appendChild(btn);
-  });
-}
-
-  function renderOptions(list, correct){
-    list.forEach(text=>{
-      const btn=document.createElement("button");
-      btn.className="opt";
-      btn.textContent=text;
-
-      btn.addEventListener("click", ()=>{
-        if(quizLocked || tries<=0) return;
-        quizLocked=true;
-
-        const ok = (text===correct);
-        if(ok){
-          qHits++; score+=5;
-          btn.classList.add("correct");
-          options.classList.add("lock");
-
-          if(actionMode==="tray"){
-            phase="pick";
-            setStatus("✅ Quiz correto! Agora: clique em um órgão para PEGAR, depois arraste até a BANDEJA e solte.", "ok");
-          }
-
-          selectedPick=null;
-          carrying=false;
-          hidePiece();
-          showTweezer(true);
-          updateHUD();
-        }else{
-          qMiss++; tries--; score=Math.max(0, score-2);
-          btn.classList.add("wrong");
-          options.classList.add("lock");
-          setStatus("❌ Quiz errado. -1 vida, -2 pontos. Próxima rodada.", "bad");
-          qtip.textContent = `Resposta correta: ${correct.toUpperCase()}`;
-          updateHUD();
-          if(tries<=0) endGame();
-          else setTimeout(()=>nextRound(), 650);
-        }
-      });
-
-      options.appendChild(btn);
-    });
-  }
-
-  // ===== Peça =====
-  function showPiece(){
-    pieceGroup.setAttribute("opacity","1");
-  }
-  function hidePiece(){
-    pieceGroup.setAttribute("opacity","0");
-    piece.setAttribute("x",-400); piece.setAttribute("y",-400);
-    pieceText.setAttribute("x",-300); pieceText.setAttribute("y",-360);
-  }
-  function movePieceCenter(cx, cy){
-    const w=200, h=54;
-    const x = cx - w/2;
-    const y = cy - h/2;
-    piece.setAttribute("x", x);
-    piece.setAttribute("y", y);
-    pieceText.setAttribute("x", cx);
-    pieceText.setAttribute("y", cy + 6);
-  }
-
-  // ===== Pinça =====
-  function showTweezer(on){ tweezer.setAttribute("opacity", on ? "1" : "0"); }
-  function moveTweezerTo(p){
-
-  const angle = pointerDown ? -18 : -12;
-
-  // 🎯 OFFSETS DIFERENTES
-  const offsetMouse = { x: -112, y: -162 };
-  const offsetTouch = { x: -38, y: -215 }; // mais acima do dedo
-
-  const off = (lastPointerType === "touch")
-    ? offsetTouch
-    : offsetMouse;
-
-  // ponto de rotação da pinça (base)
-  const rotCx = 30;
-  const rotCy = 190;
-
-  tweezer.setAttribute(
-    "transform",
-    `translate(${p.x + off.x} ${p.y + off.y}) rotate(${angle} ${rotCx} ${rotCy})`
-  );
-}
-
-
-
-  function inTray(p){
-    return (p.x>=TRAY.x && p.x<=TRAY.x+TRAY.w && p.y>=TRAY.y && p.y<=TRAY.y+TRAY.h);
-  }
-function inTray2(p){
-  return (p.x>=TRAY2.x && p.x<=TRAY2.x+TRAY2.w && p.y>=TRAY2.y && p.y<=TRAY2.y+TRAY2.h);
-}
-const tray2GlowEl = document.getElementById("tray2Glow");
-const trayGlowEl = document.getElementById("trayGlow");
-
-function setTrayGlow(on){
-  if(!trayGlowEl) return;
-  trayGlowEl.style.opacity = on ? "1" : "0";
-  trayGlowEl.setAttribute("stroke", on ? "rgba(34,197,94,.85)" : "rgba(34,197,94,0)");
-}
-
-function setTray2Glow(on){
-  if(!tray2GlowEl) return;
-  tray2GlowEl.style.opacity = on ? "1" : "0";
-  tray2GlowEl.setAttribute("stroke", on ? "rgba(245,158,11,.85)" : "rgba(245,158,11,0)");
-}
-
-  function svgPointFromEvent(e){
-  const svg = overlay; // seu <svg class="overlaySvg" ... id="overlay">
-  const pt = svg.createSVGPoint();
-
-  const ev = (e.touches && e.touches[0]) ? e.touches[0] : e;
-  pt.x = ev.clientX;
-  pt.y = ev.clientY;
-
-  const ctm = svg.getScreenCTM();
-  if(!ctm) return {x:450, y:330};
-
-  const sp = pt.matrixTransform(ctm.inverse());
-  return { x: sp.x, y: sp.y };
-}
-
-  function dist(a,b){ return Math.hypot(a.x-b.x, a.y-b.y); }
-
-  function detectOrganByClick(p, ev){
-  const e = ev || {};
-  const pt = (e.touches && e.touches[0]) ? e.touches[0] : e;
-
-  const clientX = pt.clientX;
-  const clientY = pt.clientY;
-
-  const hasClient = Number.isFinite(clientX) && Number.isFinite(clientY);
-
-  // ✅ Órgãos são <img> fora do SVG -> usa caixa real na tela
-  if(hasClient){
-    for(const o of ORGANS){
-      if(parkedIds.has(o.id)) continue;
-
-      const ref = ORG_IMG[o.id];
-      if(!ref) continue;
-
-      const el = document.getElementById(ref.elId);
-      if(!el) continue;
-
-      const style = getComputedStyle(el);
-      if(style.visibility === "hidden" || style.display === "none") continue;
-
-      const r = el.getBoundingClientRect();
-
-      // ajuste opcional: facilita clique (aumenta área)
-      const padX = 0; // bota 10/20 se quiser mais fácil
-      const padY = 0;
-
-      if(
-        clientX >= (r.left - padX) && clientX <= (r.right + padX) &&
-        clientY >= (r.top  - padY) && clientY <= (r.bottom + padY)
-      ){
-        return o;
-      }
-    }
-    return null;
-  }
-
-  // fallback: se não vier clientX/clientY, usa distância no SVG
-  let best=null, bestD=Infinity;
-  for(const o of ORGANS){
-    if(parkedIds.has(o.id)) continue;
-    const d = Math.hypot(p.x - o.cx, p.y - o.cy);
-    if(d <= o.pickR && d < bestD){ best=o; bestD=d; }
-  }
-  return best;
-}
-// ===== DEBUG VISUAL DE HITBOX =====
-let debugHitbox = false;
-const debugBoxes = [];
-
-function toggleDebugHitbox(){
-  debugHitbox = !debugHitbox;
-
-  // remove caixas antigas
-  debugBoxes.forEach(b => b.remove());
-  debugBoxes.length = 0;
-
-  if(!debugHitbox) return;
-
-  for(const o of ORGANS){
-    const ref = ORG_IMG[o.id];
-    if(!ref) continue;
-
-    const el = document.getElementById(ref.elId);
-    if(!el) continue;
-
-    const r = el.getBoundingClientRect();
-
-    const box = document.createElement("div");
-    box.style.position = "fixed";
-    box.style.left = r.left + "px";
-    box.style.top  = r.top  + "px";
-    box.style.width  = r.width + "px";
-    box.style.height = r.height + "px";
-    box.style.border = "2px dashed red";
-    box.style.zIndex = 9999;
-    box.style.pointerEvents = "none";
-    box.style.boxSizing = "border-box";
-
-    document.body.appendChild(box);
-    debugBoxes.push(box);
-  }
-}
-
-// tecla D liga/desliga
-window.addEventListener("keydown", (e)=>{
-  if(e.key.toLowerCase() === "d"){
-    toggleDebugHitbox();
-  }
-});
-
-
-  
-  // ===== Carry & Deliver =====
-  function beginCarry(org, mode){
-hideBodyOrgan(org.id);
-
-
-    // mode: "tray" | "fit" (apenas para texto)
-    selectedPick = org;
-    carrying=true;
-    phase="carry";
-
-    pieceText.textContent = "ÓRGÃO";
-
-    pieceHint.textContent = (actionMode==="tray") ? "ARRASTE ATÉ A BANDEJA" : "ARRASTE ATÉ O ENCAIXE";
-    showPiece();
-
-    const glued = {x:lastP.x + 45, y:lastP.y + 5};
-    movePieceCenter(glued.x, glued.y);
-
-    setStatus(`✅ Você pegou: ${org.nome.toUpperCase()}.
-Agora arraste e solte no destino.`, "ok");
-    updateHUD();
-  }
-
-  function failDeliver(){
-    deliverMiss++;
-    tries--;
-    score = Math.max(0, score-5);
-    buzzFX();
-    buzzSound();
-    setStatus(
-      `❌ ERRADO!
-Você levou ${selectedPick ? selectedPick.nome.toUpperCase() : "UMA PEÇA"}.
-O correto era: ${current.nome.toUpperCase()}.
--1 vida, -5 pontos.
-Próxima rodada...`,
-      "bad"
-    );
-    carrying=false;
-    selectedPick=null;
-    hidePiece();
-    updateHUD();
-    if(tries<=0){ endGame(); return; }
-    setTimeout(()=>nextRound(), 750);
-  }
-
-  function okDeliver(){
-  deliverHits++;
-  const v = calcOrganValue(current.id, parkUses);
-score += v;
-setStatus(`✅ Órgão correto! +${v} pts (estacionar: ${parkUses}x)`, "ok");
-
-
-  if(actionMode==="tray"){
-    showInTray(trayHold, current.id);
-    successFX("ok"); // ✅ AQUI (clink + vibra + flash + bounce)
-  }
-
-  carrying = false;
-  selectedPick = null;
-  hidePiece();
-
-  updateHUD();
-  setTimeout(()=>nextRound(), 750);
-}
-
-
-
-  function deliverTrayOrFit(){
-    if(!carrying || !selectedPick || !current) return;
-    const ok = (selectedPick.id === current.id);
-    if(ok) okDeliver(); else failDeliver();
-  }
-
-  function nextRound(){
-    if(tries<=0) return;
- resetRoundVisual();
-parkUses = 0;
-
-    rounds++;
-    pickOrgan();
-    if(questionMode === "quiz") buildQuestion();
-else buildCard();
-    phase="quiz";
-    carrying=false;
-    selectedPick=null;
-    hidePiece();
-    showTweezer(false);
-    updateHUD();
-    setStatus("Nova rodada criada. Responda o quiz.", "ok");
-
-    // quando em encaixe, volta a permitir seleção
-    if(actionMode==="fit"){
-      document.querySelectorAll(".pieceBtn").forEach(x=>x.classList.remove("selected"));
-    }
-  }
-
-  function endGame(){
-    stopTimer();
-    phase="quiz";
-    carrying=false;
-    selectedPick=null;
-    hidePiece();
-    showTweezer(false);
-    updateHUD();
-    setStatus(
-`Fim do jogo.
-Pontos: ${score}
-Quiz: ${qHits} acertos / ${qMiss} erros
-Entregas: ${deliverHits} certas / ${deliverMiss} erradas`,
-    "bad");
-    showCertificate("Encerrado");
-  }
-
-  // ===== Interação ponteiro =====
-  overlay.addEventListener("pointerdown", (e)=>{
-    if(!logged || tries<=0) return;
-    pointerDown=true;
-    const p=svgPointFromEvent(e);
-    lastP=p;
-    moveTweezerTo(p);
-    showTweezer(phase!=="quiz");
-
-    overlay.setPointerCapture?.(e.pointerId);
-
-    // modo BANDEJA: fase pick = clicar no órgão no corpo
-    if(actionMode==="tray" && phase==="pick"){
-      const org = detectOrganByClick(p, e);
-
-      if(!org){
-        setStatus("⚠️ Clique mais perto de algum órgão para pegar a peça.", "warn");
-        return;
-      }
-      beginCarry(org, "tray");
-      return;
-    }
-
-    // modo ENCAIXE: fase choose = não pega no corpo (pega no inventário)
-    if(actionMode==="fit" && phase==="choose"){
-      setStatus("⬅️ Escolha uma peça no inventário (lado esquerdo).", "warn");
-      return;
-    }
-  });
-
-  overlay.addEventListener("pointermove", (e)=>{
-  if(!logged) return;
-
-  lastPointerType = e.pointerType || "mouse"; // 👈 DETECTA MOUSE / TOQUE
-
-  const p = svgPointFromEvent(e);
-  lastP = p;
-  moveTweezerTo(p);
-
-// realce das bandejas quando estiver por cima (modo bandeja e carregando)
-if(actionMode==="tray" && phase==="carry" && carrying){
-  setTrayGlow(inTray(p));     // direita (correta)
-  setTray2Glow(inTray2(p));   // esquerda (separar)
-}else{
-  setTrayGlow(false);
-  setTray2Glow(false);
-}
-
-
-    // Se estiver carregando e o usuário estiver arrastando, a peça acompanha
-    if(pointerDown && phase==="carry" && carrying){
-      const glued = {x:p.x + 45, y:p.y + 5};
-      movePieceCenter(glued.x, glued.y);
-    }
-  });
-
-  overlay.addEventListener("pointerup", (e)=>{
-  if(!logged) return;
-  pointerDown=false;
-
-  const p = svgPointFromEvent(e);
-  lastP = p;
-
-  if(phase==="carry" && carrying){
-    const center = p; // ✅ ponto real do ponteiro
-
-    if(actionMode==="tray"){
-      if(inTray(center)){
-        deliverTrayOrFit();
-        return;
-      }
-
-      if(inTray2(center)){
-parkUses++;
-
-        parkedIds.add(selectedPick.id);
-        showInTray(tray2Hold, selectedPick.id);
-successFX("park");
-
-        carrying = false;
-        selectedPick = null;
-        hidePiece();
-        updateHUD();
-
-        phase = "pick";
-        showTweezer(true);
-        return;
-      }
-
-      setStatus(
-        "Leve o órgão até a BANDEJA correta (direita) ou para a BANDEJA SEPARAR (esquerda).",
-        "ok"
-      );
-    }
-  }
-});
-
-
-  overlay.addEventListener("pointercancel", ()=>{ pointerDown=false; });
-
-  // ===== Botões =====
-  btnModoQuiz.addEventListener("click", ()=>{
-    if(logged) ensureSessionStarted();
-    quizMode = (quizMode+1)%4;
-    btnModoQuiz.textContent = `Quiz: ${QUIZ_LABEL[quizMode]}`;
-    if(phase==="quiz" && current) buildQuestion();
-    setStatus("Modo de pergunta alterado.", "ok");
-  });
-
-  
-  
-  btnTempo.addEventListener("click", ()=>{
-    if(!logged){
-      // deixa configurar antes do login também
-    }
-    const cur = (timerMinutes && timerMinutes>0) ? String(timerMinutes) : "";
-    const v = prompt("Tempo (minutos) — deixe vazio para OFF:", cur);
-    if(v===null) return; // cancelou
-    const t = Number(String(v).replace(",", ".").trim());
-    if(!v.trim()){
-      timerMinutes = null;
-      stopTimer();
-    }else if(!Number.isFinite(t) || t<=0){
-      alert("Valor inválido. Use um número maior que 0 (ex.: 15).");
-      return;
-    }else{
-      timerMinutes = Math.round(t);
-      // se sessão já começou, reinicia contagem a partir de agora (regra simples)
-      if(sessionStarted){
-        sessionStartTs = Date.now();
-        stopTimer();
-        startTimerIfNeeded();
-      }
-    }
-    updateTempoBtn();
-  });
-
-  btnPrintCert.addEventListener("click", ()=>window.print());
-  btnFecharCert.addEventListener("click", ()=>{
-    certModal.style.display="none";
-    certModal.setAttribute("aria-hidden","true");
-  });
-btnSom.addEventListener("click", ()=>{
-    soundOn=!soundOn;
-    btnSom.textContent = soundOn ? "Som: ON" : "Som: OFF";
-  });
-
-  btnNova.addEventListener("click", ()=>{
-    if(!logged) return;
-    ensureSessionStarted();
-    if(tries<=0){ setStatus("Fim! Clique em Zerar.", "bad"); return; }
-    nextRound();
-  });
-btnModoPergunta.addEventListener("click", ()=>{
-    if(logged) ensureSessionStarted();
-  questionMode = (questionMode === "quiz") ? "cards" : "quiz";
-
-  if(questionMode === "cards"){
-    setStatus("🃏 MODO CARTAS ativado. (Próximo passo: exibir carta e sortear do baralho)", "warn");
-  }else{
-    setStatus("❓ MODO QUIZ ativado.", "ok");
-  }
-
-  updateHUD();
-});
-
-  btnReset.addEventListener("click", ()=>{
-    sessionStarted=false; stopTimer();
-    score=0; tries=3; rounds=0;
-    qHits=0; qMiss=0; deliverHits=0; deliverMiss=0;
-
-    // limpa marcas de encaixe/inventário
-    
-    pickOrgan();
-    buildQuestion();
-    phase="quiz";
-    carrying=false; selectedPick=null;
-    hidePiece();
-    showTweezer(false);
-    updateHUD();
-    setStatus("Jogo zerado. Responda o quiz.", "ok");
-  });
-
-  btnEncerrar.addEventListener("click", ()=>{
-    tries=0;
-    endGame();
-  });
-
-  // ===== Login =====
-  function doLogin(){
-    const turma=(loginTurma.value||"").trim();
-    const aluno=(loginAluno.value||"").trim();
-    if(!turma || !aluno){
-      loginErr.style.display="block";
-      return;
-    }
-    loginErr.style.display="none";
-    logged=true;
-    loginOverlay.style.display="none";
-    updateTempoBtn();
-    if(timeLeftEl) timeLeftEl.textContent = "--:--";
-    btnReset.disabled=false;
-    btnEncerrar.disabled=false;
-
-    // inicializa
-    
-    score=0; tries=3; rounds=0;
-    qHits=0; qMiss=0; deliverHits=0; deliverMiss=0;
-
-    pickOrgan();
-    buildQuestion();
-    phase="quiz";
-    hidePiece();
-    showTweezer(false);
-    updateHUD();
-    setStatus("✅ Iniciado. Responda o quiz.", "ok");
-
-    // inicia sessão (e timer opcional) já no login
-    ensureSessionStarted();
-
-    // label de quiz
-    btnModoQuiz.textContent = `Quiz: ${QUIZ_LABEL[quizMode]}`;
-  }
-
-  btnLogin.addEventListener("click", doLogin);
-  btnDemo.addEventListener("click", ()=>{
-    loginTurma.value="7º ano A / Ciências";
-    loginAluno.value="Aluno 01";
-    loginErr.style.display="none";
-    loginAluno.focus();
-  });
-  [loginTurma, loginAluno].forEach(el=>{
-    el.addEventListener("keydown",(e)=>{ if(e.key==="Enter") doLogin(); });
-  });
-
-  // init
-  btnModoQuiz.textContent = `Quiz: ${QUIZ_LABEL[quizMode]}`;
-  updateTempoBtn();
-  updateHUD();
-})();
 </script>
+
 </body>
 </html>
